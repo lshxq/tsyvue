@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     radioClicked() {
-      this.$emit("click", !this.checked, this.value); // checked, value
+      this.$emit("radio-clicked", !this.checked, this.value); // checked, value
     },
   },
 };

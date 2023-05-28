@@ -1,6 +1,10 @@
 <template>
-<div class="tsy-checkbox-group-main" @click="checkboxClicked">
-  <sy-checkbox v-for="(opt, idx) of options" :key="idx" :label="opt.label" :value="opt.value" :checked="checkboxState(opt)" @click="checkboxClicked"></sy-checkbox>
+<div class="tsy-checkbox-group-main">
+  <sy-checkbox v-for="(opt, idx) of options" 
+               :key="idx" 
+               :label="opt.label" 
+               :value="opt.value" 
+               :checked="checkboxState(opt)" @checkbox-clicked="checkboxClicked"></sy-checkbox>
 </div>
 </template>
 
@@ -8,27 +12,27 @@
 export default {
   name: "SyCheckboxGroup",
   props: {
-    value: Array,
+    modelValue: Array,
     options: Array,
   },
   computed: {},
   methods: {
     checkboxState(opt) {
-      const { value } = this;
-      if (value instanceof Array) {
-        const idx = value.findIndex((ele) => ele === opt.value);
+      const { modelValue } = this;
+      if (modelValue instanceof Array) {
+        const idx = modelValue.findIndex((ele) => ele === opt.value);
         return idx >= 0;
       } else {
-        return opt.value === value;
+        return opt.value === modelValue;
       }
     },
     checkboxClicked(checked, radioValue) {
-      const { value } = this;
+      const { modelValue } = this;
       const arr = [];
 
       if (checked) {
         // 添加
-        value.map((ele) => {
+        modelValue.map((ele) => {
           arr.push(ele);
         });
         if (radioValue != undefined) {
@@ -37,13 +41,13 @@ export default {
         
       } else {
         // 移除
-        value.map((ele) => {
+        modelValue.map((ele) => {
           if (ele != radioValue) {
             arr.push(ele);
           }
         });
       }
-      this.$emit("input", arr);
+      this.$emit("update:modelValue", arr);
     },
   },
 };

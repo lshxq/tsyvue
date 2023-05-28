@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     checkboxClicked() {
-      this.$emit("click", !this.checked, this.value);
+      this.$emit("checkbox-clicked", !this.checked, this.value);
     },
   },
 };

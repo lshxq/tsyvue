@@ -1,5 +1,5 @@
 <template>
-  <div :class="switchClassComp" ref="switchRef">
+  <div class="tsy-switch-main" :class="switchClassComp" ref="switchRef">
     <div class="label off">{{labelOff}}</div>
     <div class="tsy-switch" @click="toggle">
       <div class="ball" ></div>
@@ -13,7 +13,7 @@
 export default {
   name: 'sySwitch',
   props: {
-    value: Boolean,
+    modelValue: Boolean,
     labelOn: String,
     labelOff: String,
     bgColorOn: {
@@ -50,8 +50,7 @@ export default {
   computed: {
     switchClassComp() {
       return {
-        'tsy-switch-main': true,
-        on: this.value
+        on: this.modelValue
       }
     }
   },
@@ -73,7 +72,7 @@ export default {
   },
   methods: {
     toggle() {
-      this.$emit('input', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
     }
   }
 }

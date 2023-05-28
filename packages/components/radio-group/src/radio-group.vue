@@ -1,6 +1,10 @@
 <template>
 <div class="tsy-radio-group-main">
-  <sy-radio v-for="(opt, idx) of options" :key="idx" :label="opt.label" :value="opt.value" :checked="isChecked(opt)" @click="radioClicked"></sy-radio>
+  <sy-radio v-for="(opt, idx) of options" 
+            :key="idx" :label="opt.label" 
+            :value="opt.value" 
+            :checked="isChecked(opt)" 
+            @radio-clicked="radioClicked"/>
 </div>
 </template>
 
@@ -14,14 +18,14 @@ export default {
         return [];
       },
     },
-    value: null,
+    modelValue: null,
   },
   methods: {
     isChecked(opt) {
-      return this.value == opt.value;
+      return this.modelValue == opt.value;
     },
     radioClicked(checked, value) {
-      this.$emit("input", value);
+      this.$emit("update:model-value", value);
     },
   },
 };
