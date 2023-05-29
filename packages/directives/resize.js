@@ -1,3 +1,4 @@
+
 const map = new WeakMap();
 
 
@@ -14,10 +15,10 @@ const ob = new ResizeObserver((entries) => {
       } else {
         handler(entry);
       }
-      
     }
   }
 })
+
 
 
 
@@ -32,3 +33,4 @@ export default {
     ob.unobserve(el);
   }
 }
+

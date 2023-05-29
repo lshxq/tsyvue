@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    value: null,
+    modelValue: null,
     placeholder: String,
     options: {
       type: Array,
@@ -53,12 +53,12 @@ export default {
     },
     valueDisplayComputed() {
       const {
-        value,
+        modelValue,
         options
       } = this;
       let str = '';
       for (const opt of options) {
-        if (opt.value === value) {
+        if (opt.value === modelValue) {
           str = opt.label;
         }
       }
@@ -74,16 +74,16 @@ export default {
     },
     optionClicked(opt) {
       this.expend = false;
-      this.$emit('input', opt.value);
+      this.$emit('update:modelValue', opt.value);
     },
 
     optionItemClass(opt) {
       const {
-        value
+        modelValue
       } = this;
       return {
         'option-item': true,
-        selected: value === opt.value,
+        selected: modelValue === opt.value,
       }
     }
   }

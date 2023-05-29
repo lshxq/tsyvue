@@ -28,11 +28,7 @@
     <div class="score">{{score}}</div>
 
     <div class="welcome" ref="welcomeRef">
-      <div class="text miao">喵</div>
-      <div class="text le">了</div>
-      <div class="text ge">个</div>
-      <div class="text mi">咪</div>
-      
+      <div class="game-name" v-for="(item, idx) of gameNameDisplayComp" :key="idx" :style="item.style">{{item.char}}</div>
       
       <div class="start-button" @click="startGame">开始游戏</div>
     </div>
@@ -112,6 +108,12 @@ const setLocal = (obj) => {
 
 export default {
   props:{
+    gameName: {
+      type: String,
+      default() {
+        return "tsy.zone"
+      }
+    },
     width: Number,
     height: Number,
     images: {
@@ -194,6 +196,39 @@ export default {
     }
   },
   computed: {
+    gameNameDisplayComp() {
+      const {
+        gameName,
+        height,
+        width
+      } = this;
+      const arr = []
+
+
+      const fs = width / (gameName.length)
+      const offsetX = width / (gameName.length + 1)
+      const centerX = width / 2
+      const centerY = height / 2
+      const radius = width / 2
+      const deg = 60
+      for (let idx=0; idx<gameName.length; idx++) {
+        const char = gameName.charAt(idx);
+        const left = offsetX * (idx + 1)
+        const a = centerX - left
+        const top = centerY - Math.sqrt(radius * radius - a * a)
+        const rot = deg / (gameName.length - 1) * (idx ) - deg / 2
+        arr.push({
+          char,
+          style: {
+            left: `${left}px`,
+            top: `${top}px`,
+            transform: `rotate(${rot}deg) translateX(-50%)`,
+            'font-size': `${fs}px`
+          }
+        })
+      }
+      return arr;
+    },
     mainPanelClassComp() {
       const {
         showWelcome,
@@ -469,7 +504,9 @@ export default {
         return false
       }
 
-      
+      if (this.gameOverFlag) {
+        return false
+      }
 
       const that = this
 
@@ -508,9 +545,10 @@ export default {
           cardGroup.forEach(cardInGroup => {
             destoryQueue.push(cardInGroup)
           })
+          that.gameTime += 5
           setTimeout(() => {
             that.score += 1
-            that.gameTime += 5
+            
             that.sound && that.$refs.audioBgmRef.play()
             destoryQueue.forEach(cardInGroup => {
               cardInGroup.destory = true
@@ -695,42 +733,12 @@ export default {
   transition: all 1s;
 }
 
-.welcome .text {
+.welcome .game-name {
   color: white;
-  --font-size: calc(var(--main-height) / 5.5);
-  font-size: var(--font-size);
   text-shadow: calc(var(--card-height) * .07) calc(var(--card-height) * .07) gray;
-  transform-origin: 50% 50% 0;
+  transform-origin: left;
   font-weight: bolder;
-}
-
-.welcome .text.miao {
   position: absolute;
-  left: calc(var(--main-width) * .2 - var(--font-size) / 2);
-  top: calc(var(--main-height) * .2);
-  transform: rotate(-30deg);
-}
-
-
-.welcome .text.le {
-  position: absolute;
-  left: calc(var(--main-width) * .4 - var(--font-size) / 2);
-  transform: rotate(-10deg);
-  top: calc(var(--main-height) * .15);
-}
-
-.welcome .text.ge {
-  position: absolute;
-  left: calc(var(--main-width) * .6 - var(--font-size) / 2);
-  transform: rotate(10deg);
-  top: calc(var(--main-height) * .15);
-}
-
-.welcome .text.mi {
-  position: absolute;
-  left: calc(var(--main-width) * .8 - var(--font-size) / 2);
-  transform: rotate(30deg);
-  top: calc(var(--main-height) * .2);
 }
 
 .show-welcome .welcome {

@@ -2,7 +2,7 @@
 <div class="tsy-image-main">
   <sy-preview ref="previewRef" :images="imagesComp"></sy-preview>
   <div :class="imageDivClassComp" v-for="(img, idx) of imagesComp" :key="idx" @click="imageClicke(idx)">
-    <img :src="img" draggable="false" :width="widthComp" :height="heightComp"/>
+    <image :src="img" draggable="false" :width="widthComp" :height="heightComp" @load="imageLoaded"/>
     <div class="mask" v-if="preview">
       <div class="text">点击预览</div>
     </div>
@@ -20,7 +20,7 @@ export default {
         return true
       }
     },
-    src: String,
+    src: null,
     width: String,
     height: String,
     
@@ -73,6 +73,9 @@ export default {
       if (this.preview) {
         this.$refs.previewRef.show(idx)
       }
+    },
+    imageLoaded(data) {
+      console.log(data)
     }
   },
 };

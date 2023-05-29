@@ -1,14 +1,14 @@
 <template>
 <div class="tsy-options-main" v-loading="loading">
   <div class="tsy-options-type-1" v-if="type == 1">
-    <sy-select :value="reasonableValue" :placeholder="placeholderComp" @input="valueChanged" :multiple="multiple" :options="optionsComputed"/>
+    <sy-select :modelValue="reasonableValue" :placeholder="placeholderComp" @input="valueChanged" :multiple="multiple" :options="optionsComputed"/>
   </div>
 
   <div class="tsy-options-type-2" v-if="type == 2">
     <template v-if="multiple">
-      <sy-checkbox-group :options="optionsComputed" :value="reasonableValue" @input="valueChanged"></sy-checkbox-group>
+      <sy-checkbox-group :options="optionsComputed" :modelValue="reasonableValue" @input="valueChanged"></sy-checkbox-group>
     </template>
-    <sy-radio-group v-else :options="optionsComputed" :value="reasonableValue" @input="optionClicked"></sy-radio-group>
+    <sy-radio-group v-else :options="optionsComputed" :modelValue="reasonableValue" @input="optionClicked"></sy-radio-group>
   </div>
   
   <div class="tsy-options-type-3" v-if="type == 3">

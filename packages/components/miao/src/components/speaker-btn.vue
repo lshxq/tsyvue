@@ -1,6 +1,7 @@
 <template>
   <div class="speaker-main" @click="toggleValue">
-    <img :src="value ? speakerOn : speakerOff" draggable="false"/>
+    <img :src="modelValue ? speakerOn : speakerOff" draggable="false"/>
+
   </div>
 </template>
 
@@ -11,7 +12,7 @@ import speakerOff from '../assets/speaker-off.png'
 
 export default {
   props: {
-    value: Boolean
+    modelValue: Boolean
   },
   created() {
     this.speakerOn = speakerOn
@@ -19,7 +20,7 @@ export default {
   },
   methods: {
     toggleValue() {
-      this.$emit('input', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
     }
   }
 }

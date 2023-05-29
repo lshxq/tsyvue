@@ -1,6 +1,10 @@
 <template>
   <div class="miao-main" v-resize="mainSize">
-    <miao-ui v-if="windowSize" :width="windowSize.width" :height="windowSize.height" :images="images"/>
+    <miao-ui v-if="windowSize" 
+             :width="windowSize.width" 
+             :height="windowSize.height" 
+             :images="images"
+             game-name="喵了个咪"/>
   </div>
 </template>
 
