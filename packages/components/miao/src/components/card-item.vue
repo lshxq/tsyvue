@@ -12,22 +12,26 @@ export default {
   props: {
     card: Object,
     images: Array,
-    bar: Array
+    bar: Array,
+    paused: Boolean,
   },
   computed: {
     cardClassComp() {
       
       const {
         bar,
-        card
+        card,
+        paused
       } = this
-      const {
+      let {
         dark
       } = card
+      dark = dark || paused
 
       const inbar = bar.find(cib => {
         return cib.id === card.id
       })
+      
       return {
         card: true,
         dark,

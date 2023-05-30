@@ -1,6 +1,7 @@
 {
   "name": "tsyvue",
-  "version": "0.1.25",
+  "version": "0.1.26",
+  "main": "packages/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

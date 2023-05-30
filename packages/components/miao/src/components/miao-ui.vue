@@ -1,10 +1,10 @@
 <template>
-  <div :class="mainPanelClassComp" ref="mainRef">
+  <div class="miao-ui-main" :class="mainPanelClassComp" ref="mainRef">
     <audio preload="auto" :src='audio.audioSua' ref="audioSuaRef"/>
     <audio preload="auto" :src="audio.audioFailed" ref="audioFailedRef"/>
     <audio preload="auto" :src='audio.audioDu' ref="audioDuRef"/>
     <audio preload="auto" :src='audio.audioBgm' ref="audioBgmRef" loop/>
-    <speaker-btn class="speaker-control" v-model="sound"/>
+
     <template v-if="cards">
       <template  v-for='(layer, layerIdx) of cardsComp'>
         <template v-for="(row, rowIdx) of layer" >
@@ -14,18 +14,27 @@
                class="card-wrapper"
                :style="cardWrapperStyle(layerIdx, rowIdx, colIdx, card)"
                :key="`card-${layerIdx}-${rowIdx}-${colIdx}`">
-              <card-item :card="card" :images="images" :bar="bar"/>
+              <card-item :card="card" :images="images" :bar="bar" :paused="pauseTimeStart !== 0"/>
             </div>
           </template>
-          
         </template>
       </template>
     </template>
 
-    <div class="bar"></div>
+    <speaker-btn class="speaker-control" v-model="audioState"/>
 
-    <div class="time-remaid">{{timeRemainComp}}</div>
-    <div class="score">{{score}}</div>
+    <div class="bar" :style="{top: `${barTopComp}px`}"></div>
+
+    <div class="xipai control-btn" @click="xipaiClicked">
+      洗牌
+      <div class="corner">{{xipaiLeft}}</div>
+    </div>
+    <div class="zhanting control-btn" @click="pauseClicked">
+      {{pauseTimeStart === 0 ? "暂停" : "继续"}}
+      <div class="corner">{{pauseLeft}}</div>  
+    </div>
+
+    <state-bar :time-remain="timeRemainComp" :score="score"/>
 
     <div class="welcome" ref="welcomeRef">
       <div class="game-name" v-for="(item, idx) of gameNameDisplayComp" :key="idx" :style="item.style">{{item.char}}</div>
@@ -41,11 +50,19 @@
       <div class="text">game over</div>
       <div class="start-button" @click="restartGame">重新开始</div>
     </div>
+    
   </div>
 </template>
 
+
+
+
+
+
 <script>
 import Utils from '../../../../utils.js'
+import StateBar from './state-bar.vue'
+
 
 import audioSua from '../assets/audio/sua.mp3'
 import audioFailed from '../assets/audio/failed.mp3'
@@ -55,21 +72,11 @@ import audioBgm from '../assets/audio/bgm.mp3'
 import SpeakerBtn from './speaker-btn.vue'
 import CardItem from './card-item.vue' 
 
-import img0 from '../assets/0.png'
-import img1 from '../assets/1.png'
-import img2 from '../assets/2.png'
-import img3 from '../assets/3.png'
-import img4 from '../assets/4.png'
-import img5 from '../assets/5.png'
-import img6 from '../assets/6.png'
-import img7 from '../assets/7.png'
-import img8 from '../assets/8.png'
-import img9 from '../assets/9.png'
-import img10 from '../assets/10.png'
 
 
-const MARGIN_TOP = 10
+
 const BAR_LENGTH = 8
+
 
 const createCardsData = (layerCnt, rowCnt, columnCnt, typeCnt) => {
   let id = 1;
@@ -116,61 +123,19 @@ export default {
     },
     width: Number,
     height: Number,
-    images: {
-      type: Array,
-      default() {
-        return [
-          img0,
-          img1,
-          img2,
-          img3,
-          img4,
-          img5,
-          img6,
-          img7,
-          img8,
-          img9,
-          img10,
-        ]
-      }
-    }
+    images: Array
   },
-  watch: {
-    sound(value) {
-      setLocal({
-          audio: {
-            on: value
-          }
-        })
-      if (value) {
-        this.$refs.audioBgmRef.play()
-      } else {
-        this.$refs.audioBgmRef.pause()
-      }
-    },
-    width(width) {
-      this.$refs.mainRef.style.setProperty('--main-width', `${width}px`)
-    },
-    height(height) {
-      this.$refs.mainRef.style.setProperty('--main-height', `${height}px`)
-    },
-    timeRemainComp(remain) {
-      if (this.running) {
-        if (remain < 6) {
-          this.$refs.audioBgmRef.pause()
-        }
-        if (remain === 5 || remain === 4 || remain === 3 || remain === 2 || remain === 1) {
-          this.sound && this.$refs.audioDuRef.play();
-        } if (remain === 0) {
-          this.gameover()
-        }
-      }
-    }
-  },
+  
+
+
   components: {
     CardItem,
     SpeakerBtn,
+    StateBar,
   },
+
+
+
   created() {
     this.audio = {
       audioSua,
@@ -179,22 +144,33 @@ export default {
       audioBgm
     }
   },
+
+
+
+
   data() {
-    const sound = getLocal('audio.on')
+    const audioState = getLocal('audio.on')
     return {
       cards: false,
       bar: [],
-      sound,
+      audioState,
       gameStartTime: 0,
+      pauseTime: 0, // 记录游戏一共暂停了多久
+      pauseTimeStart: 0,  // 开始暂停的时间，在结束暂停的时候累计 pauseTime
+      pauseLeft: 3,
       score: 0,
       gameTime: 10000, // 可用的游戏时间
       running: false,
       currentTime: Date.now(),
       showWelcome: true,
       gameOverFlag: false,
-
+      xipaiFlag: false, // 正在洗牌
+      xipaiLeft: 3,
     }
   },
+
+
+
   computed: {
     gameNameDisplayComp() {
       const {
@@ -205,17 +181,19 @@ export default {
       const arr = []
 
 
-      const fs = width / (gameName.length)
+      const fs = Math.min(width, height) / (gameName.length)
       const offsetX = width / (gameName.length + 1)
       const centerX = width / 2
       const centerY = height / 2
-      const radius = width / 2
+      const radius = Math.min(width, height) / 2
       const deg = 60
       for (let idx=0; idx<gameName.length; idx++) {
         const char = gameName.charAt(idx);
         const left = offsetX * (idx + 1)
         const a = centerX - left
-        const top = centerY - Math.sqrt(radius * radius - a * a)
+        const topOffset = Math.sqrt(radius * radius - a * a)
+        let top = centerY - topOffset
+        
         const rot = deg / (gameName.length - 1) * (idx ) - deg / 2
         arr.push({
           char,
@@ -235,7 +213,6 @@ export default {
         gameOverFlag
       } = this
       return {
-        'miao-ui-main': true,
         'show-welcome': showWelcome,
         'show-game-over': gameOverFlag
       }
@@ -244,13 +221,19 @@ export default {
       const {
         gameStartTime,
         currentTime,
+        pauseTime,
+        pauseTimeStart,
         gameTime,
       } = this
-
-      
-      const rv = gameTime - Math.floor((currentTime - gameStartTime) / 1000)
-      return rv
+      let rv = 0
+      if (pauseTimeStart === 0) { // 当前没有暂停
+        rv = gameTime - (currentTime - gameStartTime) / 1000 + pauseTime
+      } else {
+        rv = gameTime - (pauseTimeStart - gameStartTime) / 1000 + pauseTime
+      }
+      return Math.floor(rv)
     },
+
     cardMarginLeftComp() {
       const {
         width, cardWidthComp, columnCountComp
@@ -275,16 +258,59 @@ export default {
         width,
         cardWidthComp
       } = this
-      return Math.floor((width - width * .2 )/ cardWidthComp - 1)
+      return Math.floor((width * .99 ) / cardWidthComp)
     },
     barTopComp() {
-      return this.height * 0.88
+      const {
+        height,
+        cardHeightComp
+      } = this
+      const top = height - cardHeightComp - height * 0.01;
+      return top
     }
   }, 
+
+
+
+  watch: {
+    audioState(value) {
+      setLocal({
+          audio: {
+            on: value
+          }
+        })
+      if (value) {
+        this.$refs.audioBgmRef.play()
+      } else {
+        this.$refs.audioBgmRef.pause()
+      }
+    },
+    width(width) {
+      this.$refs.mainRef.style.setProperty('--main-width', `${width}px`)
+    },
+    height(height) {
+      this.$refs.mainRef.style.setProperty('--main-height', `${height}px`)
+    },
+    timeRemainComp(remain) {
+      if (this.running) {
+        if (remain < 6) {
+          this.$refs.audioBgmRef.pause()
+        }
+        if (remain === 5 || remain === 4 || remain === 3 || remain === 2 || remain === 1) {
+          this.audioState && this.$refs.audioDuRef.play();
+        } if (remain === 0) {
+          this.gameover()
+        }
+      }
+    }
+  },
+
+
+
   mounted() {
     const that = this
     that.$refs.audioBgmRef.volume = .5
-    that.sound && that.$refs.audioBgmRef.play();
+
     that.$refs.mainRef.style.setProperty('--main-width', `${this.width}px`)
     that.$refs.mainRef.style.setProperty('--main-height', `${this.height}px`)
     that.$refs.mainRef.style.setProperty('--bar-length', BAR_LENGTH)
@@ -295,11 +321,31 @@ export default {
       }
     }, 10)
   },
+
+
+
+
   unmounted() {
     clearInterval(this.timerId)
   },
+
+
+
+
   methods: {
+    pauseClicked() {
     
+      if (this.pauseTimeStart === 0) {
+        if (this.pauseLeft <= 0) {
+          return false
+        }
+        this.pauseLeft -= 1
+        this.pauseTimeStart = Date.now()
+      } else {
+        this.pauseTime += (Date.now() - this.pauseTimeStart) / 1000
+        this.pauseTimeStart = 0
+      }
+    },
     cardInMatrix(layerIdx, rowIdx, colIdx, newValue) {
       const cards = JSON.parse(JSON.stringify(this.cards));
       const layer = cards[layerIdx];
@@ -354,7 +400,7 @@ export default {
         offsetY = cardHeightComp / 2
       }
 
-      const top = rowIdx * cardHeightComp + MARGIN_TOP + offsetY
+      const top = rowIdx * cardHeightComp + cardHeightComp + offsetY  // 上面空出一个卡牌高度，显示state
       const left = colIdx * cardWidthComp + cardMarginLeftComp + offsetX
       return {
         top,
@@ -371,22 +417,77 @@ export default {
         const style = {
           top: `${pos.top}px`,
           left: `${pos.left}px`,
-          'z-index': 9999 + layerIdx,
+          'z-index': 99999 + layerIdx,
         }
-
-
         return style;
       } 
 
       const {
-        top,
-        left
+        xipaiFlag,
+        width,
+        height,
+        cardWidthComp,
+        cardHeightComp
+      } = this
+
+      const {
+        top: topOri,
+        left: leftOri
       } = this.getCardPositionInMatrix(layerIdx, rowIdx, colIdx);
+
+      let top = topOri
+      let left = leftOri
+
+      if (xipaiFlag) { // 如果当前正在洗牌，
+        const centerX = width / 2
+        const centerY = height / 2
+
+        let cx = left + cardWidthComp / 2
+        let cy = top + cardHeightComp / 2
+
+        if (cy === centerY) {
+          cy =+ 1
+        }
+        if (cx === centerX) {
+          cx += 1
+        }
+        const b = centerY - cy // >0 上面    <0 下面
+        const a = centerX - cx // >0左面     <0 右面
+
+        let tan = b / a 
+
+        if (tan > 20) {
+          tan = 20
+        } else if (tan < -20) {
+          tan = -20
+        }
+        
+        if (cx <= centerX) {  // 左面
+          left = centerX - width
+
+          if (cy <= centerY) { // 4
+            top = left * tan
+          } else {  // 3
+            top = left * tan + centerY
+          }
+
+        } else {    // 右面
+          left = centerX + width
+
+          if (cy <= centerY) { // 1
+            top = left * tan
+          } else { // 2
+            top = left * tan
+          }
+        }
+      } 
+
+
 
       const style = {
         top: `${top}px`,
         left: `${left}px`,
-        'z-index': 999 + layerIdx,
+        'z-index': 9999 + layerIdx,
       }
 
       return style;
@@ -499,9 +600,50 @@ export default {
         }) 
       }
     },
+    xipaiClicked() {
+      const that = this
+
+      if (that.xipaiLeft <= 0) {
+        return false
+      }
+      if (that.xipaiFlag) {
+        return false
+      }
+
+      that.xipaiFlag = true
+      that.xipaiLeft -= 1
+      
+      setTimeout(() => {
+        that.xipaiFlag = false
+        const {
+          cards
+        } = that
+        for (const layer of cards) {
+          for (const row of layer) {
+            for (const card of row) {
+              const cardInBar = that.bar.find(cardInBar => {
+                return cardInBar && cardInBar.id === card.id
+              })
+              if (!cardInBar && !card.destory) {  // 已经加入bar，用bar中的位置, 只能变换不在bar中的card
+                card.type = Math.floor(Math.random() * that.images.length)
+              }
+              
+            }
+          }
+        }
+      }, 1000)
+    },
     cardClicked(card) {
       if (card.dark) { // 黑牌不能点击
         return false
+      }
+
+      if (this.xipaiFlag) {
+        return false
+      }
+
+      if (this.pauseTimeStart !== 0) {
+        return false;
       }
 
       if (this.gameOverFlag) {
@@ -522,7 +664,7 @@ export default {
         return false
       }
 
-      that.sound && that.$refs.audioSuaRef.play();
+      that.audioState && that.$refs.audioSuaRef.play();
 
       that.bar.push(card)
       that.bar.sort((a, b) => {
@@ -549,7 +691,7 @@ export default {
           setTimeout(() => {
             that.score += 1
             
-            that.sound && that.$refs.audioBgmRef.play()
+            that.audioState && that.$refs.audioBgmRef.play()
             destoryQueue.forEach(cardInGroup => {
               cardInGroup.destory = true
               that.cardInMatrix(cardInGroup.layerIdx, cardInGroup.rowIdx, cardInGroup.colIdx, cardInGroup)
@@ -577,7 +719,7 @@ export default {
       const that = this
       that.running = false
       that.$refs.audioBgmRef.pause()
-      that.sound && that.$refs.audioFailedRef.play()
+      that.audioState && that.$refs.audioFailedRef.play()
       that.gameOverFlag = true
       
     },
@@ -591,18 +733,28 @@ export default {
     },
     newGame() {
       const that = this
-      that.cards = createCardsData(11, 6, this.columnCountComp, this.images.length);
+      that.cards = createCardsData(2, 6, this.columnCountComp, this.images.length);
       that.gameStartTime = Date.now()
       that.gameTime = 50;
+      that.pauseTime = 0;
+      that.pauseTimeStart = 0;
       that.running = true
       that.gameOverFlag = false
       that.bar = []
       that.score = 0
-      that.sound && that.$refs.audioBgmRef.play()
+      that.audioState && that.$refs.audioBgmRef.play()
     }
   }
 }
 </script>
+
+
+
+
+
+
+
+
 
 <style scoped>
 .miao-ui-main {
@@ -611,10 +763,11 @@ export default {
   --bar-length: 8;
   --card-height: calc(var(--main-height) * 0.11);
   --card-width: calc(var(--card-height) * 0.618);
-  --game-over-z: 900000;
+  --game-over-z: calc(var(--speaker-z) + 1);
   --welcome-z: 899998;
-  --speaker-z: 899999;
-  --water-mark-z: 899999;
+  --speaker-z: calc(var(--welcome-z) + 1);
+  --water-mark-z: calc(var(--welcome-z) + 1);
+  --bar-left: calc((100% - var(--bar-length) * var(--card-width)) / 2);
 
   overflow: hidden;
   user-select: none;
@@ -664,14 +817,11 @@ export default {
 }
 
 .bar {
-  --bar-left: calc((100% - var(--bar-length) * var(--card-width)) / 2);
-  --bar-top: calc(var(--main-height) * .88);
 
   height: var(--card-height);
   width: calc(var(--card-width) * var(--bar-length));
   background: lightgray;
   position: absolute;
-  top: var(--bar-top);
   left: var(--bar-left);
   border-radius: 10px;
 }
@@ -746,36 +896,10 @@ export default {
 }
 
 
-.time-remaid {
-  position: absolute;
-  top: 3%;
-  left: 1%;
-  color: white;
-  font-size: var(--card-width);
-}
-.time-remaid:before {
-  content: 'Time remain:';
-  font-size: calc(var(--card-width) / 5);
-  display: block;
-}
-
-.score {
-  position: absolute;
-  top: 3%;
-  right: 6%;
-  color: white;
-  font-size: var(--card-width);
-}
-.score:before {
-  content: 'Score:';
-  font-size: calc(var(--card-width) / 5);
-  display: block;
-}
-
 .speaker-control {
   position: absolute;
   right: 3%;
-  top: 13%;
+  top: calc(var(--card-height) * .75);
   width: calc(var(--card-width) / 3);
   height: calc(var(--card-width) / 3);
   z-index: var(--speaker-z);
@@ -788,5 +912,43 @@ export default {
   bottom: calc(var(--main-height) * .01);
   z-index: var(--water-mark-z);
   color: gray;
+}
+
+
+.control-btn {
+  position: absolute;
+  font-size: calc(var(--card-width) * .3);
+  padding: calc(var(--card-width) * .15);
+  background: linear-gradient(#eee, white, #eee);
+  border-radius: calc(var(--card-width) * .2);
+  cursor: pointer;
+  color: rgb(77, 73, 73);
+  border: 1px solid gray;
+  --box-shadow-size: calc(var(--card-width) * .05);
+  box-shadow: var(--box-shadow-size) var(--box-shadow-size) var(--box-shadow-size) gray;
+}
+.control-btn>.corner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --coner-width: calc(var(--card-width) * .4);
+  position: absolute;
+  right: 0;
+  top: calc(0px - var(--coner-width) * .5);
+  border-radius: calc(var(--coner-width) / 2);
+  background: red;
+  color: white;
+  width: var(--coner-width);
+  height: var(--coner-width);
+}
+
+.xipai.control-btn {
+  right: calc(var(--card-width) * .5);
+  bottom: calc(var(--card-height) * 1.3);
+}
+
+.zhanting {
+  right: calc(var(--card-width) * 2);
+  bottom: calc(var(--card-height) * 1.3);
 }
 </style>

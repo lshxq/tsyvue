@@ -1,8 +1,20 @@
 
 const map = new WeakMap();
 
+const debounce = function(fn, wait) {
+  let timer = null;
+  return function(entries) {
+    if (timer !== null) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn(entries)
+    }, wait)
+  }
+}
 
-const ob = new ResizeObserver((entries) => {
+
+const ob = new ResizeObserver(debounce((entries) => {
   for(const entry of entries) {
     const handler = map.get(entry.target);
     if (handler) {
@@ -17,7 +29,7 @@ const ob = new ResizeObserver((entries) => {
       }
     }
   }
-})
+}, 300))
 
 
 
