@@ -26,11 +26,11 @@
     <div class="bar" :style="{top: `${barTopComp}px`}"></div>
 
     <div class="xipai control-btn" @click="xipaiClicked">
-      洗牌
+      {{t('btn.randomCard')}}
       <div class="corner">{{xipaiLeft}}</div>
     </div>
     <div class="zhanting control-btn" @click="pauseClicked">
-      {{pauseTimeStart === 0 ? "暂停" : "继续"}}
+      {{pauseTimeStart === 0 ? t("btn.pause") : t('btn.continue')}}
       <div class="corner">{{pauseLeft}}</div>  
     </div>
 
@@ -39,7 +39,7 @@
     <div class="welcome" ref="welcomeRef">
       <div class="game-name" v-for="(item, idx) of gameNameDisplayComp" :key="idx" :style="item.style">{{item.char}}</div>
       
-      <div class="start-button" @click="startGame">开始游戏</div>
+      <div class="start-button" @click="startGame">{{t('btn.start')}}</div>
     </div>
 
     <div class="water-mark link">
@@ -47,8 +47,8 @@
     </div>
 
     <div class="game-over-mask">
-      <div class="text">game over</div>
-      <div class="start-button" @click="restartGame">重新开始</div>
+      <div class="text">{{t('gameover')}}</div>
+      <div class="start-button" @click="restartGame">{{t('btn.restart')}}</div>
     </div>
     
   </div>
@@ -72,7 +72,7 @@ import audioBgm from '../assets/audio/bgm.mp3'
 import SpeakerBtn from './speaker-btn.vue'
 import CardItem from './card-item.vue' 
 
-
+import langMixin from '../mixins/lang-mixin.js'
 
 
 const BAR_LENGTH = 8
@@ -126,6 +126,10 @@ export default {
     images: Array
   },
   
+
+
+  mixins: [langMixin],
+
 
 
   components: {
@@ -417,7 +421,7 @@ export default {
         const style = {
           top: `${pos.top}px`,
           left: `${pos.left}px`,
-          'z-index': 99999 + layerIdx,
+          'z-index': 100000 + layerIdx,
         }
         return style;
       } 
@@ -487,7 +491,7 @@ export default {
       const style = {
         top: `${top}px`,
         left: `${left}px`,
-        'z-index': 9999 + layerIdx,
+        'z-index': 100000 + layerIdx,
       }
 
       return style;
@@ -684,9 +688,9 @@ export default {
       for (const key in grouped) {
         const cardGroup = grouped[key]
         if (cardGroup.length >= 3) {
-          cardGroup.forEach(cardInGroup => {
-            destoryQueue.push(cardInGroup)
-          })
+          for (let destoryIdx=0; destoryIdx<3; destoryIdx++) {
+            destoryQueue.push(cardGroup[destoryIdx])
+          }
           that.gameTime += 5
           setTimeout(() => {
             that.score += 1

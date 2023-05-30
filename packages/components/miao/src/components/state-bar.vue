@@ -1,16 +1,27 @@
 <template>
   <div class="state-bar-main">
-    <div class="time-remain">{{timeRemain}}</div>
-    <div class="score">{{score}}</div>
+    <div class="state-item">
+      <div class="label">{{t('state.timeRemain')}}</div>
+      <div class="time-remain">{{timeRemain}}</div>
+    </div>
+    
+    <div class="state-item">
+      <div class="label">{{t('state.score')}}</div>
+      <div class="time-remain">{{score}}</div>
+    </div>
   </div>
 </template>
 
 <script>
+import LangMixin from '../mixins/lang-mixin.js'
+
+
 export default {
   props: {
     timeRemain: Number,
     score: Number
-  }
+  },
+  mixins: [LangMixin]
 }
 </script>
 
@@ -29,23 +40,20 @@ export default {
   height: var(--card-height);
   box-sizing: border-box;
 }
+.state-item>.label {
+  font-size: calc(var(--card-width) / 5);
+  display: block;
+  color: white;
+}
 .time-remain {
   color: white;
   font-size: calc(var(--card-width) * .7);
 }
-.time-remain:before {
-  content: 'Time remain:';
-  font-size: calc(var(--card-width) / 5);
-  display: block;
-}
+
+
 
 .score {
   color: white;
   font-size: calc(var(--card-width) * .7);
-}
-.score:before {
-  content: 'Score:';
-  font-size: calc(var(--card-width) / 5);
-  display: block;
 }
 </style>
