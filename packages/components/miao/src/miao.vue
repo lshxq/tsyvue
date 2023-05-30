@@ -58,8 +58,8 @@ export default {
       const rate = 1.8
 
       this.windowSize = size.height / size.width > rate ? {
-        width: size.width * devicePixelRatio,
-        height: size.width * rate * devicePixelRatio
+        width: size.width,
+        height: size.width * rate
       } : size
     }
   }
