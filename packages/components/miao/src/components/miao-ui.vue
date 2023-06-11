@@ -821,7 +821,6 @@ export default {
 }
 
 .bar {
-
   height: var(--card-height);
   width: calc(var(--card-width) * var(--bar-length));
   background: lightgray;

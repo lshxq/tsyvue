@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="h1">左右布局 sy-left-right</div>
-  <sy-left-right>
+  <sy-left-right width="500">
     <template v-slot:left><div>left content</div></template>
     <template v-slot:right><div>right content</div></template>
   </sy-left-right>

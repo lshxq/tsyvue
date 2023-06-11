@@ -15,16 +15,21 @@
 
     <div>
       <h2>v-resize</h2>
-      <div>一个事件，注册一个回电函数，获得变化后的size</div>
+      <div>一个事件，注册一个回电函数，获得变化后的size  {{size}}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      size: {}
+    }
+  },
   methods: {
     resized(data) {
-      console.log(data)
+      this.size = data
     }
   }
 }

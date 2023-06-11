@@ -1,5 +1,5 @@
 <template>
-<div class='sy-left-right-main' :style="styleComp">
+<div class='sy-left-right-main' ref="mainRef">
   <div class='left' >
     <slot name='left'/>
   </div>
@@ -13,25 +13,19 @@
 export default {
   name: 'SyLeftRight',
   props: {
-    width: {
-      type: String,
-      default() {
-        return '50%'
-      }
-    }
+    width: String,
+    leftWidth: String,
   },
-  computed: {
-    styleComp() {
-      const {
-        width: ww
-      } = this;
-      let width = ww
-      if (width.match(/^\d+$/g)) {
-        width = `${width}px`
-      }
-      return {
-        width
-      }
+  mounted() {
+    const {
+      width,
+      leftWidth
+    } = this
+    if (width && width.match(/^\d+$/g)) {
+      this.$refs.mainRef.style.setProperty('--width', `${width}px`)
+    }
+    if (leftWidth && leftWidth.match(/^\d+$/g)) {
+      this.$refs.mainRef.style.setProperty('--left-width', `${leftWidth}px`)
     }
   }
 }
@@ -39,12 +33,20 @@ export default {
 
 <style scoped>
 .sy-left-right-main {
-  width: 100%;
+  --width: 100%;
+  --left-width: 50%;
+
+  width: var(--width);
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
 
-
+.left {
+  width: var(--left-width);
+}
+.right {
+  width: calc(100% - var(--left-width));
+}
 </style>
