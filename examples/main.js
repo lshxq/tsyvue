@@ -4,6 +4,8 @@ import App from './App.vue'
 import tsyvue from '../packages'
 import router from './router'
 
+import './assets/main.css'
+
 
 axios.defaults.baseURL = '/api'
 const myMixin = {
