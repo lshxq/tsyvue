@@ -81,21 +81,13 @@ export default {
   },
   mounted() {
     const mainPanel = this.$refs.mainRef
-    const {
-      panelSize
-    } = this
-    this.size = panelSize || {
+
+    this.updateSize({
       height: mainPanel.offsetHeight,
       width: mainPanel.offsetWidth
-    }
-    if (panelSize) {
-      mainPanel.style.setProperty('--height', `${panelSize.height}px`)
-      mainPanel.style.setProperty('--width', `${panelSize.width}px`)
-    }
-    this.windowPos = {
-      top: (mainPanel.offsetHeight - this.windowSize.height) / 2,
-      left: (mainPanel.offsetWidth - this.windowSize.width) / 2,
-    }
+    })
+    
+    
 
     mainPanel.addEventListener('wheel', this.scrollScale)
   },
@@ -105,10 +97,25 @@ export default {
   },
 
   methods: {
-    updateSize(data) {
-      if (!this.panelSize) {
+    updateSize(data) { //
+      const mainPanel = this.$refs.mainRef
+      const {
+        panelSize,
+        windowSize
+      } = this
+
+      if (panelSize) {
+        mainPanel.style.setProperty('--height', `${panelSize.height}px`)
+        mainPanel.style.setProperty('--width', `${panelSize.width}px`)
+        this.size = panelSize
+      } else {
         this.size = data
-      } 
+      }
+
+      this.windowPos = {
+        top: (mainPanel.offsetHeight - windowSize.height) / 2,
+        left: (mainPanel.offsetWidth - windowSize.width) / 2,
+      }
     },
     getImageData() {
       const {

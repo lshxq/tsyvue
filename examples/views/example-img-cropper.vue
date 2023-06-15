@@ -8,7 +8,7 @@
     </div>
     <button @click="pickfile">选择图片</button>
     <div class="cropper-wrapper">
-      <sy-img-cropper ref="cropper" :img="input" :panel-size="{width:600, height:500}"/>
+      <sy-img-cropper ref="cropper" :img="input"/>
     </div>
     
     <button @click="getImageData">获得图像</button>
