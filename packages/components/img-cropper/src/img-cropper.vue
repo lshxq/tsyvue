@@ -1,5 +1,5 @@
 <template>
-  <div class="sy-img-cropper-main" ref="mainRef" @scroll="scrollScale($event)">
+  <div class="sy-img-cropper-main" ref="mainRef" @scroll="scrollScale($event)" v-resize="updateSize">
     <img :src="img" :style="imgStyleComp" ref='imgRef' @load="imgLoaded()" draggable="false"/>
     <div class="window" v-drag :style="windowStyleComp"  :data-drag-range-h="dragRangeH" :data-drag-range-v="dragRangeV" @dragged="updateWindowPos"></div>
     <canvas ref="canvasRef" class="canvas"></canvas>
@@ -12,6 +12,7 @@ export default {
   name: 'SyImgCropper',
   props: {
     img: String,
+    panelSize: Object,
     windowSize: {
       type: Object,
       default() {
@@ -80,9 +81,16 @@ export default {
   },
   mounted() {
     const mainPanel = this.$refs.mainRef
-    this.size = {
+    const {
+      panelSize
+    } = this
+    this.size = panelSize || {
       height: mainPanel.offsetHeight,
       width: mainPanel.offsetWidth
+    }
+    if (panelSize) {
+      mainPanel.style.setProperty('--height', `${panelSize.height}px`)
+      mainPanel.style.setProperty('--width', `${panelSize.width}px`)
     }
     this.windowPos = {
       top: (mainPanel.offsetHeight - this.windowSize.height) / 2,
@@ -97,6 +105,11 @@ export default {
   },
 
   methods: {
+    updateSize(data) {
+      if (!this.panelSize) {
+        this.size = data
+      } 
+    },
     getImageData() {
       const {
         windowSize,
