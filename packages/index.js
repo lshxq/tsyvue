@@ -25,6 +25,7 @@ import WaterDrop from './components/water-drop';
 import Switch from './components/switch';
 import Blocks from './components/blocks';
 import Miao from './components/miao';
+import ImgCropper from './components/img-cropper';
 import FormMixin from "./mixins/form-mixin";
 
 
@@ -55,6 +56,7 @@ const components = [
   Calendar, // 日历
   WaterDrop, // 水滴
   Switch, // 开关
+  ImgCropper, // 图片裁剪
   Blocks, // 俄罗斯方块
   Miao, // 喵了个咪
 ];
@@ -113,6 +115,7 @@ export default {
   Switch,
   Blocks,
   Miao,
+  ImgCropper,
   // mixins
   FormMixin,
 };

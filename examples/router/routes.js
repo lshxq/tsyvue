@@ -298,6 +298,15 @@ const naviRoutes = [
     component: () => import("../views/example-clip-path.vue"),
   },
   {
+    path: "/img-cropper",
+    name: "img-cropper",
+    meta: {
+      navi: "img-cropper",
+      label: "img-cropper",
+    },
+    component: () => import("../views/example-img-cropper.vue"),
+  },
+  {
     path: "/directives",
     name: "directives",
     meta: {
