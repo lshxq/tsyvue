@@ -66,7 +66,7 @@ export default {
     },
     imgStyleComp() {
       return {
-        zoom: this.scale
+        transform: `scale(${this.scale})`
       }
     },
     windowStyleComp() {
@@ -119,7 +119,7 @@ export default {
       canvas.width = windowSize.width
       canvas.height = windowSize.height
       ctx.putImageData(imgData, 0, 0)
-      return canvas.toDataURL()
+      return canvas.toDataURL('image/png')
     },
     updateWindowPos({target}) {
       this.windowPos = {
