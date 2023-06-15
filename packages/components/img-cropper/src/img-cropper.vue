@@ -108,6 +108,7 @@ export default {
       const ctx = canvas.getContext('2d');
       canvas.width = imgSize.width * this.scale;
       canvas.height = imgSize.height * this.scale;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(this.$refs.imgRef, 0, 0, canvas.width, canvas.height);
 
       const offsetX = (size.width - canvas.width) / 2
