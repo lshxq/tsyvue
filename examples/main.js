@@ -3,8 +3,10 @@ import axios from 'axios'
 import App from './App.vue'
 import tsyvue from '../packages'
 import router from './router'
+import MarkdownViewer from './components/markdown-viewer.vue'
 
 import './assets/main.css'
+import 'mavon-editor/dist/css/index.css'
 
 
 axios.defaults.baseURL = '/api'
@@ -50,7 +52,9 @@ const myMixin = {
 
 const app = createApp(App)
 app.use(tsyvue)
+
 app.use(router)
+app.component('m-viewer', MarkdownViewer)
 app.mixin(myMixin)
 app.mount('#app')
 
