@@ -7,8 +7,9 @@
           <sy-switch v-model="checked"></sy-switch>
         </div>
       </div>
+
       <div class="desc">
-        &lt;sy-switch v-model='{{checked}}'/&gt;
+        <m-viewer :markdown='c1'/>
       </div>
     </div>
     
@@ -20,7 +21,7 @@
         </div>
       </div>
       <div class="desc">
-        &lt;sy-switch v-model='{{checked}}' label-on='开启' label-off='关闭'/&gt;
+      <m-viewer :markdown='c2'/>
       </div>
     </div>
 
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="desc">
-        &lt;sy-switch v-model='{{checked}}' label-on='开启' label-off='关闭' bg-color-on="#28d21e" bg-color-off="#fa3246"/&gt;
+        <m-viewer :markdown='c3'/>
       </div>
     </div>
 
@@ -44,7 +45,7 @@
         </div>
       </div>
       <div class="desc">
-        &lt;sy-switch v-model='{{checked}}' label-on='开启' label-off='关闭' bg-color-on="#28d21e" bg-color-off="#fa3246" width="300" height="50"/&gt;
+        <m-viewer :markdown='c4'/>
       </div>
     </div>
 
@@ -56,7 +57,7 @@
         </div>
       </div>
       <div class="desc">
-        &lt;sy-switch v-model='{{checked}}' label-on='开启' label-off='关闭' bg-color-on="#28d21e" bg-color-off="#fa3246" width="300" height="50"  label-font-size="50"/&gt;
+      <m-viewer :markdown='c5'/>
       </div>
     </div>
     
@@ -64,10 +65,53 @@
 </template>
 
 <script>
+const code = (str, lang='javascript') => {
+  return `
+\`\`\` ${lang}
+${str}
+\`\`\`
+`
+}
+
 export default {
+
   data() {
     return {
       checked: false
+    }
+  },
+  computed: {
+    c1() {
+      return code(`<sy-switch v-model='${this.checked}'/>`, 'html')
+    },
+    c2() {
+      return code(`<sy-switch v-model='${this.checked}' label-on='开启' label-off='关闭'/>`, 'html')
+    },
+    c3() {
+      return code(`<sy-switch v-model='${this.checked}' 
+      label-on='开启' 
+      label-off='关闭' 
+      bg-color-on="#28d21e" 
+      bg-color-off="#fa3246"/>`, 'html')
+    },
+    c4() {
+      return code(`<sy-switch v-model='${this.checked}' 
+      label-on='开启' 
+      label-off='关闭' 
+      bg-color-on="#28d21e" 
+      bg-color-off="#fa3246" 
+      width="300" 
+      height="50"/>`, 'html')
+    },
+    c5() {
+      return code(`<sy-switch v-model='${this.checked}' 
+      label-on='开启' 
+      label-off='关闭' 
+      bg-color-on="#28d21e" 
+      bg-color-off="#fa3246" 
+      width="300" 
+      height="50" 
+      label-font-size="50"/>`, 'html')
     }
   }
 }

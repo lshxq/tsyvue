@@ -52,7 +52,7 @@ export default {
 }
 
 .tsy-radio-main:hover .mark .round-outter {
-  outline: 1px solid #409eff;
+  border: 1px solid #409eff;
 }
 
 .tsy-radio-main {
@@ -74,7 +74,7 @@ export default {
   align-items: center;
   transition: .4s;
   cursor: pointer;
-  outline: 1px solid lightgray;
+  border: 1px solid lightgray;
   width: 16px;
   height: 16px;
   border-radius: 10px;

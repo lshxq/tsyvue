@@ -18,14 +18,18 @@ const ob = new ResizeObserver(debounce((entries) => {
   for(const entry of entries) {
     const handler = map.get(entry.target);
     if (handler) {
-      const box = entry.borderBoxSize[0];
-      if (box) {
-        handler({
-          width: box.inlineSize,
-          height: box.blockSize
-        })
+      if (entry.contentRect) { // chrome  78.0.3904.108
+        handler(entry.contentRect)
       } else {
-        handler(entry);
+        const box = entry.borderBoxSize[0];
+        if (box) {
+          handler({
+            width: box.inlineSize,
+            height: box.blockSize
+          })
+        } else {
+          handler(entry);
+        }
       }
     }
   }

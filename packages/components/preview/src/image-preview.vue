@@ -2,7 +2,7 @@
 <div class="tsy-image-preview-main">
   <template v-if="visibility">
     <transition name="fade">
-      <div class="mask" v-loading="loading">
+      <div class="tsy-image-preview-inner">
         <div class="image-container" @mouseup="move = false" @mousemove="mousemove">
           <div class="center">
             <div class="anchor" :style="anchorStyle"><img :src="imgSrc" ref='imgRef' :style="imageStyle" draggable="false" @load="imageLoaded" @mousedown="mousedown"/></div>
@@ -23,6 +23,7 @@
           <div class="el-icon-refresh-left btn" @click="rotate -= 90"></div>
           <div class="el-icon-refresh-right btn" @click="rotate +=  90"></div>
         </div>
+        <div class='mask' v-if="loading"/>
       </div>
     </transition>
   </template>
@@ -170,7 +171,7 @@ export default {
   outline: 1px solid red;
 }
 
-.tsy-image-preview-main .mask {
+.tsy-image-preview-main .tsy-image-preview-inner {
   user-select: none;
   position: fixed;
   top: 0;
@@ -181,7 +182,16 @@ export default {
   z-index: 999;
 }
 
-.tsy-image-preview-main .mask .toolbar {
+.tsy-image-preview-main .tsy-image-preview-inner .mask{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(255,255,255,.8);
+}
+
+.tsy-image-preview-main .tsy-image-preview-inner .toolbar {
   background-color: rgba(0, 0, 0, 0.5);
   color: #e0e0e0;
   position: absolute;
@@ -194,16 +204,16 @@ export default {
   border-radius: 15px;
 }
 
-.tsy-image-preview-main .mask .toolbar .btn:hover {
+.tsy-image-preview-main .tsy-image-preview-inner .toolbar .btn:hover {
   color: white;
 }
 
-.tsy-image-preview-main .mask .toolbar .btn {
+.tsy-image-preview-main .tsy-image-preview-inner .toolbar .btn {
   font-size: 25px;
   cursor: pointer;
 }
 
-.tsy-image-preview-main .mask .round-btn {
+.tsy-image-preview-main .tsy-image-preview-inner .round-btn {
   position: absolute;
   top: 50%;
   display: flex;
@@ -219,20 +229,20 @@ export default {
   cursor: pointer;
 }
 
-.tsy-image-preview-main .mask .right-button {
+.tsy-image-preview-main .tsy-image-preview-inner .right-button {
   right: 30px;
 }
 
-.tsy-image-preview-main .mask .left-button {
+.tsy-image-preview-main .tsy-image-preview-inner .left-button {
   left: 30px;
 }
 
-.tsy-image-preview-main .mask .close-button {
+.tsy-image-preview-main .tsy-image-preview-inner .close-button {
   top: 30px;
   right: 30px;
 }
 
-.tsy-image-preview-main .mask .image-container {
+.tsy-image-preview-main .tsy-image-preview-inner .image-container {
   height: 100%;
   width: 100%;
   display: flex;
@@ -240,12 +250,12 @@ export default {
   align-items: center;
 }
 
-.tsy-image-preview-main .mask .image-container .center {
+.tsy-image-preview-main .tsy-image-preview-inner .image-container .center {
   position: relative;
   display: inline;
 }
 
-.tsy-image-preview-main .mask .image-container .center .anchor {
+.tsy-image-preview-main .tsy-image-preview-inner .image-container .center .anchor {
   display: inline;
   overflow: visible;
   position: absolute;
