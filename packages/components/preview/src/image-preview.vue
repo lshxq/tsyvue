@@ -9,19 +9,18 @@
           </div>
         </div>
         <div class="right-button round-btn" @click="next(1)" v-if="images.length &gt; 1">
-          <div class="el-icon-arrow-right"></div>
+          <sy-arrow color="white"/>
         </div>
         <div class="left-button round-btn" @click="next(-1)" v-if="images.length &gt; 1">
-          <div class="el-icon-arrow-left"></div>
+          <sy-arrow color="white" :rotate="180"/>
         </div>
-        <div class="close-button round-btn" @click="visibility = false">
-          <div class="el-icon-close"></div>
-        </div>
+        <div class="close-button round-btn" @click="visibility = false">+</div>
+
         <div class="toolbar">
-          <div class="el-icon-zoom-out btn" @click="zoom(-0.1)"></div>
-          <div class="el-icon-zoom-in btn" @click="zoom(0.1)"></div>
-          <div class="el-icon-refresh-left btn" @click="rotate -= 90"></div>
-          <div class="el-icon-refresh-right btn" @click="rotate +=  90"></div>
+          <div class="btn" @click="zoom(-0.1)">-</div>
+          <div class="btn" @click="zoom(0.1)">+</div>
+          <div class="btn" @click="rotate -= 90">left</div>
+          <div class="btn" @click="rotate +=  90">right</div>
         </div>
         <div class='mask' v-if="loading"/>
       </div>
@@ -179,7 +178,7 @@ export default {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 99999999;
 }
 
 .tsy-image-preview-main .tsy-image-preview-inner .mask{
@@ -197,7 +196,7 @@ export default {
   position: absolute;
   bottom: 30px;
   left: calc(50% - 60px);
-  width: 200px;
+  width: 250px;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
@@ -240,6 +239,8 @@ export default {
 .tsy-image-preview-main .tsy-image-preview-inner .close-button {
   top: 30px;
   right: 30px;
+  font-weight: 100;
+  transform: rotate(45deg);
 }
 
 .tsy-image-preview-main .tsy-image-preview-inner .image-container {

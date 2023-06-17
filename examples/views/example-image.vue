@@ -1,5 +1,6 @@
 <template>
 <div class="tsy-images">
+  <m-viewer :markdown="content"/>
   <div class="h1">图片 sy-img</div>
   <div class="mt30">我们经常会遇到需要迭代展示的一些图片，每次都开发相同的逻辑很烦，我对img标签做了一些封装，形成了sy-img标签。使用代码如下</div>
   <div class="code-block mt30">
@@ -23,12 +24,23 @@
     <div class="intend">}</div>
   </div>
   <div class="mt30">sy-image 接收src，src可以是一个图片的字符串，也可以 是 图片地址的数组，确保图片地址在浏览器中可以访问到即可。多个图片自动排列，有悬停点击效果，点击图片自动预览。同时至此 width和height属性，不传入大小有默认值。 默认宽度100像素。</div>
-  <sy-img class="mt30" :src="images"></sy-img>
+  <sy-img class="mt30" :src="images"/>
 </div>
 </template>
 
 <script>
 export default {
+  setup() {
+    return {
+      content: `# 图片 sy-img 
+我们经常会遇到需要迭代展示的一些图片，每次都开发相同的逻辑很烦，我对img标签做了一些封装，形成了sy-img标签。添加了一些默认行为
+\`\`\` html
+<sy-img :src='imageArr'
+        width='300px'/>
+\`\`\`
+      `
+    }
+  },
   data() {
     return {
       images: [

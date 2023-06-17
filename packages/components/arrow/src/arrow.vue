@@ -51,7 +51,7 @@ export default {
 </script>
 <style scoped>
 .sy-arrow-main {
-  display: inline
+  display: inline-block;
 }
 
 svg {

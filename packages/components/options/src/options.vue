@@ -1,14 +1,10 @@
 <template>
 <div class="tsy-options-main" v-loading="loading">
-  <div class="tsy-options-type-1" v-if="type == 1">
-    <sy-select :modelValue="reasonableValue" :placeholder="placeholderComp" @input="valueChanged" :multiple="multiple" :options="optionsComputed"/>
-  </div>
-
   <div class="tsy-options-type-2" v-if="type == 2">
     <template v-if="multiple">
-      <sy-checkbox-group :options="optionsComputed" :modelValue="reasonableValue" @input="valueChanged"></sy-checkbox-group>
+      <sy-checkbox-group :options="optionsComputed" :modelValue="reasonableValue" @update:modelValue="valueChanged"></sy-checkbox-group>
     </template>
-    <sy-radio-group v-else :options="optionsComputed" :modelValue="reasonableValue" @input="optionClicked"></sy-radio-group>
+    <sy-radio-group v-else :options="optionsComputed" :modelValue="reasonableValue" @update:modelValue="optionClicked"></sy-radio-group>
   </div>
   
   <div class="tsy-options-type-3" v-if="type == 3">
@@ -29,7 +25,7 @@ export default {
   name: "SyOptions",
   props: {
     label: String,
-    value: null,
+    modelValue: null,
     multiple: {
       type: Boolean,
       default() {
@@ -64,21 +60,21 @@ export default {
   computed: {
     reasonableValue() {
       const {
-        value,
+        modelValue,
         multiple
       } = this
       if (multiple) {
-        if (value instanceof Array) {
-          return value
+        if (modelValue instanceof Array) {
+          return modelValue
         } else {
-          if (value !== undefined) {
-            return [value]
+          if (modelValue !== undefined) {
+            return [modelValue]
           } else {
             return []
           }
         }
       }
-      return value
+      return modelValue
     },
     optionsComputed() {
       const {
@@ -116,8 +112,8 @@ export default {
     
   },
   methods: {
-    valueChanged(value) {
-      this.$emit("input", value);
+    valueChanged(newValue) {
+      this.$emit("update:modelValue", newValue);
     },
     blockOptionsOptionClass(opt) {
       const { reasonableValue,multiple } = this;
@@ -146,9 +142,9 @@ export default {
         } else { // 需要添加
           reasonableValue.push(val)
         }
-        this.$emit('input', reasonableValue)
+        this.$emit('update:modelValue', reasonableValue)
       } else {
-        this.$emit('input', val)
+        this.$emit('update:modelValue', val)
       }
     },
     loadData() {

@@ -1,8 +1,8 @@
 <template>
 <div class="tsy-image-main">
   <sy-preview ref="previewRef" :images="imagesComp"></sy-preview>
-  <div :class="imageDivClassComp" v-for="(img, idx) of imagesComp" :key="idx" @click="imageClicke(idx)">
-    <image :src="img" draggable="false" :width="widthComp" :height="heightComp" @load="imageLoaded"/>
+  <div class='tsy-image-item' :class="imageDivClassComp" v-for="(img, idx) of imagesComp" :key="idx" @click="imageClicked(idx)">
+    <img :src="img" draggable="false" :style="styleComp" @load="imageLoaded"/>
     <div class="mask" v-if="preview">
       <div class="text">点击预览</div>
     </div>
@@ -30,10 +30,19 @@ export default {
     }
   },
   computed: {
+    styleComp() {
+      const {
+        widthComp: width,
+        heightComp: height
+      } = this
+      return {
+        width,
+        height
+      }
+    },
     imageDivClassComp() {
       return {
-        'tsy-image-item': true,
-        '.preview-enabled': this.preview
+        'preview-enabled': this.preview
       }
     },
     imagesComp() {
@@ -97,7 +106,7 @@ export default {
 }
 
 .tsy-image-main .tsy-image-item.preview-enabled:hover .mask {
-  background: rgba(255, 255, 255, 0.6);
+  visibility: visible;
 }
 
 .tsy-image-main .tsy-image-item.preview-enabled:hover .mask .text {
@@ -106,9 +115,9 @@ export default {
 
 .tsy-image-main .tsy-image-item {
   position: relative;
-  width: 100%;
-  height: 100%;
   background-color: white;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .tsy-image-main .tsy-image-item img {
@@ -129,6 +138,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(255,255,255,.6);
+  visibility: hidden;
 }
 
 .tsy-image-main .tsy-image-item .mask .text {

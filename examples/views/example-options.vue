@@ -6,11 +6,6 @@
   <div>组件定义了多种常用的外观，可以通过传入type:Number 来指定外观</div>
   <div class="section mt100"><b>单选模式  multiple=false</b>
     <div class="mt30"> 
-      <div class="highlight">Type 1</div>
-      <div class="mb10">下拉列表</div>
-      <sy-options label="颜色" v-model="valueRadio" :first-option="{label: &quot;All&quot;, value: &quot;&quot;}" url="/example/options" :mock="mockData"></sy-options>
-    </div>
-    <div class="mt30"> 
       <div class="highlight">Type 2</div>
       <div class="mb10">单选按钮Radio </div>
       <sy-options label="颜色" v-model="valueRadio" url="/example/options" :mock="mockData" type="2"></sy-options>
@@ -44,44 +39,11 @@
     <div>通过options初始化的备选项，不拉数据</div>
     <sy-options label="颜色" v-model="value3" :options="mockData" type="3"></sy-options>
   </div>
-  <div>通过URL初始化备选项
-    <div class="code-block">
-      <div class="intend">sy-options(
-        <div class="intend"> label='颜色'</div>
-        <div class="intend"> v-model='value'</div>
-        <div class="intend"> url='/example/options'</div>
-        <div class="intend"> type='3'</div>
-        <div class="intend"> multiple</div>
-      </div>
-      <div class="intend">)</div>
-    </div>
-  </div>
-  <div class="mt10">通过options初始化备选项，不会发起数据拉取请求
-    <div class="code-block">
-      <div class="intend">// 模板部分</div>
-      <div class="intend">sy-options(
-        <div class="intend"> label='颜色'</div>
-        <div class="intend"> v-model='value'</div>
-        <div class="intend"> options='opts'</div>
-      </div>
-      <div class="intend">)</div>
-      <div class="intend mt30">// vue实例上绑定的备选项</div>
-      <div class="intend">this.opts = [{
-        <div class="intend">label: "备选项1",</div>
-        <div class="intend">value: "1",</div>
-      </div>
-      <div class="intend">}, {
-        <div class="intend">label: "2222",</div>
-        <div class="intend">value: "B",</div>
-      </div>
-      <div class="intend">},{
-        <div class="intend">label: "CCCC",</div>
-        <div class="intend">value: "C",</div>
-      </div>
-      <div class="intend">}];</div>
-    </div>
-  </div>
-  <div>sy-options集成了数拉取的动作，使用该组件，仅需要提供数据源的url地址即可。</div>
+
+
+  <m-viewer :markdown="content"/>
+
+  
   <div class="mt100">
     <div class="h2">Props</div>
     <sy-table :columns="propTableColumns" :data="propTableData"> 
@@ -119,6 +81,44 @@ import commentMixin from "../mixins/comment-mixins.js";
 import optionDefined from './components/option-object-desc.vue'
 
 export default {
+  setup() {
+    return {
+      content: `
+
+### 通过URL初始化备选项
+sy-options集成了数拉取的动作，使用该组件，仅需要提供数据源的url地址即可。
+\`\`\` html 
+<sy-options
+  label='颜色'
+  v-model='value'
+  url='/example/options'
+  type='3'
+  multiple/>
+\`\`\`
+url对应接口返回的数据应满足以下格式
+\`\`\` javascript
+[
+  {
+    label: String, // 显示的值
+    value: String, // 提交的值
+  },
+  ...
+]
+\`\`\`
+
+
+### 通过options初始化备选项，不会发起数据拉取请求
+如果你的备选项不是来之后端的数据字典，而是前端写死的，那么也可以通过传入options指定备选项
+\`\`\` html
+<sy-options
+  label='颜色'
+  v-model='value'
+  options='opts'/>
+\`\`\`
+`
+    }
+  },
+
   components: {
     axiosRequired,
     optionDefined

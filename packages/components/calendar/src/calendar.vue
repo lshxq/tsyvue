@@ -4,13 +4,14 @@
       <div class="button-row">
         <div class="left button-group">
           <div class="button" @click="month(-12)">
-            <sy-arrow color="gray" :count="2" class="rotated180 arrow" />
+            <sy-arrow color="gray" :count="2" class="arrow" :rotate="180"/>
           </div>
           <div class="button" @click="month(-1)">
-            <sy-arrow color="gray" class="rotated180 arrow" />
+            <sy-arrow color="gray" class="arrow" :rotate="180"/>
           </div>
         </div>
         <div class="middle button-group">{{ displayComputed }}</div>
+
         <div class="right button-group">
           <div class="button" @click="month(1)">
             <sy-arrow color="gray" class="arrow" />
@@ -57,7 +58,7 @@ import utils from "../../../utils.js";
 export default {
   name: "SyCalendar",
   props: {
-    value: {
+    modelValue: {
       type: Date,
       default() {
         return new Date();
@@ -71,12 +72,12 @@ export default {
     },
   },
   data() {
-    let { value } = this;
-    if (!(value instanceof Date)) {
-      value = new Date();
+    let { modelValue } = this;
+    if (!(modelValue instanceof Date)) {
+      modelValue = new Date();
     }
     return {
-      display: value,
+      display: modelValue,
     };
   },
   computed: {
@@ -178,16 +179,16 @@ export default {
       this.display = date;
     },
     cellClicked(date) {
-      this.$emit("input", date);
+      this.$emit("update:modelValue", date);
       this.display = date;
     },
     cellClass(date) {
-      const { display, value } = this;
+      const { display, modelValue } = this;
       const gray = display.getMonth() != date.getMonth();
       const highlight =
-        date.getFullYear() === value.getFullYear() &&
-        date.getMonth() === value.getMonth() &&
-        date.getDate() === value.getDate();
+        date.getFullYear() === modelValue.getFullYear() &&
+        date.getMonth() === modelValue.getMonth() &&
+        date.getDate() === modelValue.getDate();
       const today = new Date();
       const todayMark =
         date.getFullYear() === today.getFullYear() &&
@@ -217,9 +218,7 @@ export default {
 .arrow:hover {
   opacity: 0.6;
 }
-.rotated180 {
-  transform: rotate(180deg);
-}
+
 .tsy-calendar-main-panel {
   width: 100%;
   min-width: 300px;
