@@ -4,18 +4,34 @@
 
   <m-viewer :markdown="c1"/>
 
-  <div class="criteria-bar">
-    <el-input class="w200" v-model="query.keyword"></el-input>&nbsp;
-    <el-select class="w200" v-model="query.status">
-      <el-option label="启动" value="up"></el-option>
-      <el-option label="停止" value="down"></el-option>
-    </el-select>
-  </div>
-  <sy-pagin-data url="/user/list" :query="query" :mock="mockDataFunc" :pagin-data-mapper="paginDataMapper" style="width: 800px">
-    <template v-slot:="scope"> 
-      <div class="data-row" v-for="(row, idx) of scope.data" :key="idx">{{row}}</div>
+  <sy-left-right left-width="600">
+    <template v-slot:left>
+      <div class="criteria-bar">
+        <input class="w200" v-model="query.keyword"/>&nbsp;
+        <select class="w200" v-model="query.status">
+          <option label="启动" value="up"></option>
+          <option label="停止" value="down"></option>
+        </select>
+      </div>
     </template>
-  </sy-pagin-data>
+    <template v-slot:right>
+      <span class="red bold">检索条件区域</span>
+    </template>
+  </sy-left-right>
+  
+  <sy-left-right left-width="600">
+    <template v-slot:left>
+      <sy-pagin-data url="/user/list" :query="query" :mock="mockDataFunc" :pagin-data-mapper="paginDataMapper" style="width: 500px">
+        <template v-slot:="scope"> 
+          <div class="data-row" v-for="(row, idx) of scope.data" :key="idx">{{row}}</div>
+        </template>
+      </sy-pagin-data>
+    </template>
+    <template v-slot:right>
+      <div class="red bold">数据展示区</div>
+    </template>
+  </sy-left-right>
+  
 
   <div> 
     <div class="mt100">
@@ -65,11 +81,11 @@ export default {
     this.c1 = `# 分页数据组件 sy-pagin-data
 \`\`\` html
 <div class="criteria-bar">
-  <el-input class="w200" v-model="query.keyword"></el-input>&nbsp;
-  <el-select class="w200" v-model="query.status">
-    <el-option label="启动" value="up"></el-option>
-    <el-option label="停止" value="down"></el-option>
-  </el-select>
+  <input class="w200" v-model="query.keyword"></input>&nbsp;
+  <select class="w200" v-model="query.status">
+    <option label="启动" value="up"></option>
+    <option label="停止" value="down"></option>
+  </select>
 </div>
 <sy-pagin-data url="/user/list" :query="query" :mock="mockDataFunc" :pagin-data-mapper="paginDataMapper" style="width: 800px">
   <template v-slot:="scope"> 

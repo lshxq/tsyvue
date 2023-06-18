@@ -167,15 +167,7 @@ const naviRoutes = [
     },
     component: () => import("../views/example-tags.vue"),
   },
-  {
-    path: "/form-mixin",
-    name: "form-mixin",
-    meta: {
-      navi: "form-mixin",
-      label: "form-mixin",
-    },
-    component: () => import("../views/form-mixin/example-form-mixin.vue"),
-  },
+  
   {
     path: "/sy-form",
     name: "sy-form",
@@ -288,6 +280,15 @@ const naviRoutes = [
       label: "img-cropper",
     },
     component: () => import("../views/example-img-cropper.vue"),
+  },
+  {
+    path: "/form-mixin",
+    name: "form-mixin",
+    meta: {
+      navi: "form-mixin",
+      label: "form-mixin",
+    },
+    component: () => import("../views/form-mixin/example-form-mixin.vue"),
   },
   {
     path: "/directives",
