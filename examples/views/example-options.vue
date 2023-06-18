@@ -56,17 +56,7 @@
           </template>
           <template v-if="scope.row.name == &quot;url&quot;"> 
             <div>拉取数据字典的url地址，服务器应该返回Option对象的数组</div>
-            <div class="code-block">
-              <div class="intend">[
-                <div class="intend">{
-                  <div class="intend">label: String, // 显示的值</div>
-                  <div class="intend">value: String, // 提交的值</div>
-                </div>
-                <div class="intend">},</div>
-                <div class="intend">...</div>
-              </div>
-              <div class="intend">]</div>
-            </div>
+            <m-viewer :markdown="c1"/>
           </template>
         </template>
       </template>
@@ -83,6 +73,15 @@ import optionDefined from './components/option-object-desc.vue'
 export default {
   setup() {
     return {
+      c1: `\`\`\` javascript
+[
+  {
+    label: String, // 显示的值
+    value: String, // 提交的值
+  },
+  ...
+]
+\`\`\``,
       content: `
 
 ### 通过URL初始化备选项

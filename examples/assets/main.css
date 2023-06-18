@@ -336,3 +336,19 @@ body {
   background-color: #f9f9f9;
   border: 1px solid lightgray;
 }
+
+
+.button {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  background: linear-gradient(#f0f0f0, #fefefe, #f0f0f0);
+  display: inline-block;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.button:hover {
+  box-shadow: 5px 5px 5px lightgray;
+  transform: translate(-2px, -2px);
+}

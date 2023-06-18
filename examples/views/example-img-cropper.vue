@@ -1,17 +1,13 @@
 <template>
   <div class="example-image-cropper-main">
-    <div>
-      <h1>sy-img-cropper</h1>
-      <p>图像剪切，通过img属性传入要裁剪的图片，通过getImageData方法获得剪切后的图片的额base64, 窗口大小跟随父节点, 通过windowSize{width: 200, height: 150}指定 要得到的 图片的大小, panelSize可以指定面板的大小</p>
-      <p>&lt;sy-img-cropper ref="cropper" :img="input"/&gt;</p>
-      <p>通过this.$refs.cropper.getImageData()获得剪切后的图片</p>
-    </div>
-    <button @click="pickfile">选择图片</button>
+    <m-viewer :markdown="content"/>
+
+    <button @click="pickfile" class="mb20">选择图片</button>
     <div class="cropper-wrapper">
       <sy-img-cropper ref="cropper" :img="input"/>
     </div>
     
-    <button @click="getImageData">获得图像</button>
+    <button @click="getImageData" class="mt20">获得图像</button>
     <img :src="output" class="output"/>
   </div>
 
@@ -20,6 +16,19 @@
 <script>
 export default {
   data() {
+    this.content = `# 图片裁剪 sy-img-cropper
+\`\`\` html
+<div class="cropper-wrapper">
+  <sy-img-cropper ref="cropper" :img="input"/>
+</div>
+\`\`\`
+
+图像剪切，通过img属性传入要裁剪的图片，通过getImageData方法获得剪切后的图片的额base64, 窗口大小跟随父节点, 通过windowSize{width: 200, height: 150}指定 要得到的 图片的大小, panelSize可以指定面板的大小。
+\`\`\` javascript
+this.$refs.cropper.getImageData() // 获得剪切后的图片
+\`\`\`
+    `
+
     return {
       output: '',
       input: require('../assets/beach.jpg')

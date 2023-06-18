@@ -86,15 +86,6 @@ const naviRoutes = [
     component: () => import("../views/example-options.vue"),
   },
   {
-    path: "/sy-search-input",
-    name: "sy-search-input",
-    meta: {
-      navi: "sy-search-input",
-      label: "检索输入框 sy-search-input",
-    },
-    component: () => import("../views/example-search-input.vue"),
-  },
-  {
     path: "/sy-rolling-image",
     name: "sy-rolling-image",
     meta: {
@@ -260,15 +251,6 @@ const naviRoutes = [
       label: "俄罗斯方块",
     },
     component: () => import("../views/example-blocks.vue"),
-  },
-  {
-    path: "/miao",
-    name: "miao",
-    meta: {
-      navi: "miao",
-      label: "喵了个咪",
-    },
-    component: () => import("../views/example-miao.vue"),
   },
   {
     path: "/colors",

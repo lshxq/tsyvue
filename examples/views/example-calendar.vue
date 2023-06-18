@@ -1,18 +1,31 @@
 <template>
   <div class="example-calendar-main">
+    <m-viewer :markdown="content"/>
+
     <div class="calendar-container"><sy-calendar v-model="date" ref="cldr"/></div>
     <div class="current-value">当前值： {{dateStr}}</div>
 
     <div><button @click="setDisplay">返回当前月份</button></div>
-    <div class="mt30">
-      一个简朴的日历组件，通过v-model绑定当前选择的日期，默认值为今天。日历的宽度通过父容器确定。 &lt;sy-calendar v-model="date"/&gt;。 可以通过 setDisplay函数设置当前面板显示的年月。this.$refs.cldr.setDisplay(new Date());
-    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
+    this.content = `# 日历 sy-calendar
+\`\`\` html
+<div class="calendar-container">
+  <sy-calendar v-model="date" ref="cldr"/>
+</div>
+\`\`\`
+
+一个简朴的日历组件，通过v-model绑定当前选择的日期，默认值为今天。日历的宽度通过父容器确定。 可以通过 setDisplay函数设置当前面板显示的年月。
+\`\`\` javascript
+this.$refs.cldr.setDisplay(new Date()); // 设置当前显示的年月
+\`\`\`
+
+
+    `
     return {
       date: new Date()
     }

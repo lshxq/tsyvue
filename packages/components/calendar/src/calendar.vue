@@ -3,20 +3,20 @@
     <div :class="showBorderComputed">
       <div class="button-row">
         <div class="left button-group">
-          <div class="button" @click="month(-12)">
+          <div class="c-button" @click="month(-12)">
             <sy-arrow color="gray" :count="2" class="arrow" :rotate="180"/>
           </div>
-          <div class="button" @click="month(-1)">
+          <div class="c-button" @click="month(-1)">
             <sy-arrow color="gray" class="arrow" :rotate="180"/>
           </div>
         </div>
         <div class="middle button-group">{{ displayComputed }}</div>
 
         <div class="right button-group">
-          <div class="button" @click="month(1)">
+          <div class="c-button" @click="month(1)">
             <sy-arrow color="gray" class="arrow" />
           </div>
-          <div class="button" @click="month(12)">
+          <div class="c-button" @click="month(12)">
             <sy-arrow color="gray" :count="2" class="arrow" />
           </div>
         </div>
@@ -243,13 +243,13 @@ export default {
   display: flex;
   align-items: center;
 }
-.button-group > .button {
+.button-group > .c-button {
   margin: 3px;
   padding: 3px;
   cursor: pointer;
 }
 
-.button-group > .button:hover {
+.button-group > .c-button:hover {
   font-weight: bold;
 }
 

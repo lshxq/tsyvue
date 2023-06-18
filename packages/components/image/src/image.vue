@@ -118,6 +118,7 @@ export default {
   background-color: white;
   margin-right: 10px;
   margin-bottom: 10px;
+  border: 1px solid lightgray;
 }
 
 .tsy-image-main .tsy-image-item img {

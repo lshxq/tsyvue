@@ -6,6 +6,7 @@ import router from './router'
 import MarkdownViewer from './components/markdown-viewer.vue'
 
 import './assets/main.css'
+import './assets/override.css'
 import 'mavon-editor/dist/css/index.css'
 
 
