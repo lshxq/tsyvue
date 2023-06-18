@@ -2,7 +2,7 @@
 <div class="tsy-tags-main">
   <div class="tag" v-for="(tag, idx) of items" :key="idx" :class="getTagClass(tag)"> 
     <div class="text">{{getTagText(tag)}}</div>
-    <div class="delete-btn el-icon-close" v-if="removable || tag.removable" @click="deleteTag(tag, idx)"></div>
+    <div class="delete-btn" v-if="removable || tag.removable" @click="deleteTag(tag, idx)">+</div>
   </div>
 </div>
 </template>
@@ -87,6 +87,7 @@ export default {
   justify-content: center;
   align-items: center;
   display: flex;
+  transform: rotate(45deg);
 }
 
 .tsy-tags-main .tag .delete-btn:hover {

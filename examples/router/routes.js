@@ -41,6 +41,15 @@ const naviRoutes = [
     component: () => import("../views/example-switch.vue"),
   },
   {
+    path: "/sy-table",
+    name: "sy-table",
+    meta: {
+      navi: "sy-table",
+      label: "基础Table sy-table",
+    },
+    component: () => import("../views/example-table.vue"),
+  },
+  {
     path: "/sy-paginator",
     name: "sy-paginator",
     meta: {
@@ -103,15 +112,7 @@ const naviRoutes = [
     },
     component: () => import("../views/example-ray-border.vue"),
   },
-  {
-    path: "/sy-table",
-    name: "sy-table",
-    meta: {
-      navi: "sy-table",
-      label: "基础Table sy-table",
-    },
-    component: () => import("../views/example-table.vue"),
-  },
+
   {
     path: "/sy-split-screen-vertical",
     name: "sy-split-screen-vertical",

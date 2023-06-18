@@ -1,31 +1,42 @@
 <template>
   <div class="example-directives-main" v-resize="resized">
-    <h1>指令集</h1>
-    <div>
-      <h2>v-drag</h2>
-      <div>
-        在一个绝对定位的dom节点上加上 v-drag 指令，使其可以自由拖动, data-drag-range-h 和 data-drag-range-v 可以限定拖动范围， 接受的值 如 0,200
+    <m-viewer :markdown="content"/>
 
-        <div class="v-drag-container">
-          <div class="v-drag-item" v-drag>拽我</div>
-          <sy-water-drop  :zoom="1" v-drag/>
-        </div>
-      </div>
+    <div class="v-drag-container" v-loading="loading">
+      <div class="v-drag-item" v-drag>拽我</div>
+      <sy-water-drop  :zoom="1" v-drag/>
     </div>
 
-    <div>
-      <h2>v-resize</h2>
-      <div>一个事件，注册一个回电函数，获得变化后的size  {{size}}</div>
-    </div>
+    {{size}}
   </div>
 </template>
 
 <script>
 export default {
+  created() {
+    this.content = `# 指令集
+### v-loading
+接受true和false作为参数，在指定element中生成一个mask，用来显示数据加载过程。
+
+### v-drag
+在一个绝对定位的dom节点上加上 v-drag 指令，使其可以自由拖动, data-drag-range-h 和 data-drag-range-v 可以限定拖动范围， 接受的值 如 0,200
+
+### v-resize
+一个事件，注册一个回电函数，获得变化后的size
+`
+  },
+
   data() {
     return {
-      size: {}
+      size: {},
+      loading: true
     }
+  },
+  mounted() {
+    const that = this
+    setTimeout(() => {
+      that.loading = false
+    }, 3000) 
   },
   methods: {
     resized(data) {

@@ -4,7 +4,7 @@
       <input  :value="valueDisplayComputed" readonly @blur="inputBlur" :placeholder="placeholder"/>
     </div>
 
-    <sy-arrow :class="arrowClassComputed" color="#BBBBBB"/>
+    <sy-arrow class="select-arrow" color="#BBBBBB" :rotate="rotateComp" @click="expend = !expend"/>
     
     <div :class="optionPanelClassComputed">
       <div :class="optionItemClass(opt)" v-for="(opt, idx) of options" :key="idx" @click="optionClicked(opt)">{{opt.label}}</div>
@@ -33,6 +33,9 @@ export default {
 
   },
   computed: {
+    rotateComp() {
+      return this.expend ? 270 : 90
+    },
     optionPanelClassComputed() {
       const {
         expend
@@ -42,15 +45,7 @@ export default {
         expend
       }
     },
-    arrowClassComputed() {
-      const {
-        expend
-      } = this
-      return {
-        'select-arrow': true,
-        expend
-      }
-    },
+
     valueDisplayComputed() {
       const {
         modelValue,
@@ -101,14 +96,11 @@ export default {
 .select-arrow {
   position: absolute;
   right: 10px;
-  top: 7px;
-  transform: rotate(90deg);
+  top: 5px;
   cursor: pointer;
   transition: .5s all;
 }
-.select-arrow.expend {
-  transform: rotate(270deg);
-}
+
 
 .tsy-select-main>.input {
   cursor: pointer;

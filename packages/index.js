@@ -62,11 +62,13 @@ const components = [
 
 
 import resize from './directives/resize.js';
-import drag from './directives/drag.js'
+import drag from './directives/drag.js';
+import loading from './directives/loading.js'
 
 const directives =  [
   resize,
-  drag
+  drag,
+  loading,
 ]
 
 

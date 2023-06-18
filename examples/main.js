@@ -32,8 +32,10 @@ const myMixin = {
             } else {
               mockData = buildResponse(mock)
             }
-            console.log('调用接口失败，采用mock数据', mockData)
-            res(mockData)
+            setTimeout(() => {
+              console.log('调用接口失败，采用mock数据', mockData)
+              res(mockData)
+            }, 1000)
           } else {
             rej(ex)
           }
