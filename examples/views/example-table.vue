@@ -211,7 +211,7 @@ computed: {
   },
   methods: {
     sorterChanged(sorter) {
-      console.log(sorter);
+      alert(JSON.stringify(sorter));
     },
   },
 };

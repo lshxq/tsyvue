@@ -23,11 +23,18 @@ export default {
 </div>
 \`\`\`
 
-图像剪切，通过img属性传入要裁剪的图片，通过getImageData方法获得剪切后的图片的额base64, 窗口大小跟随父节点, 通过windowSize{width: 200, height: 150}指定 要得到的 图片的大小, panelSize可以指定面板的大小。
+图像剪切，通过img属性传入要裁剪的图片，通过getImageData方法获得剪切后的图片的base64, 窗口大小跟随父节点。
 \`\`\` javascript
 this.$refs.cropper.getImageData() // 获得剪切后的图片
 \`\`\`
-    `
+
+Props
+|参数名|值|说明|
+|-|-|-|
+|img|String|被截切的图片，可以访问到的url或者是图片的base64|
+|window-size|Object default {width: 200, height: 150}|裁切窗口的尺寸，就是剪切后得到图片的大小，有width和height两个属性，都是Number类型，单位是px|
+|panel-size|Object|裁切面板的大小，可以不指定，不指定时，panel默认填充父节点|
+`
 
     return {
       output: '',

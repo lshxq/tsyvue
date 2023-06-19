@@ -9,7 +9,7 @@
           </th>
           <th class="tsy-table-th-cell" :key="idx" v-for="(col, idx) of columnsComp" :style="cellStyle(col)">
             <div class="tsy-table-cell tsy-table-head-cell">{{col.label}}
-              <sorter v-if="col.sorter" :sorter-id="col.sorter" :order="sorterOrder(col.sorter)" @click="sorterClicked"></sorter>
+              <sorter v-if="col.sorter" :sorter-id="col.sorter" :order="sorterOrder(col.sorter)" @sort-changed="sorterClicked"></sorter>
             </div>
           </th>
         </tr>

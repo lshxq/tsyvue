@@ -1,7 +1,12 @@
 <template>
-<div class="tsy-table-sorter-main">
-  <div class="table-sorter-inner"><img class="icon" v-if="!ascend" src="../../../../assets/images/arrow-up-gray.png" @click="sorterClicked(&quot;ascend&quot;)"/><img class="icon" v-else src="../../../../assets/images/arrow-up-blue.png" @click="sorterClicked(&quot;&quot;)"/><img class="icon" v-if="!descend" src="../../../../assets/images/arrow-down-gray.png" @click="sorterClicked(&quot;descend&quot;)"/><img class="icon" v-else src="../../../../assets/images/arrow-down-blue.png" @click="sorterClicked(&quot;&quot;)"/></div>
-</div>
+  <div class="tsy-table-sorter-main">
+    <div class="table-sorter-inner"><img class="icon" v-if="!ascend" src="../../../../assets/images/arrow-up-gray.png"
+        @click="sorterClicked(&quot;ascend&quot;)" /><img class="icon" v-else
+        src="../../../../assets/images/arrow-up-blue.png" @click="sorterClicked(&quot;&quot;)" /><img class="icon"
+        v-if="!descend" src="../../../../assets/images/arrow-down-gray.png"
+        @click="sorterClicked(&quot;descend&quot;)" /><img class="icon" v-else
+        src="../../../../assets/images/arrow-down-blue.png" @click="sorterClicked(&quot;&quot;)" /></div>
+  </div>
 </template>
 
 <script>
@@ -21,7 +26,7 @@ export default {
   },
   methods: {
     sorterClicked(order) {
-      this.$emit('click', this.sorterId, order)
+      this.$emit('sort-changed', this.sorterId, order)
     }
   }
 }
@@ -52,6 +57,4 @@ export default {
 .tsy-table-sorter-main .table-sorter-inner .icon {
   width: 11px;
   cursor: pointer;
-}
-
-</style>
+}</style>
