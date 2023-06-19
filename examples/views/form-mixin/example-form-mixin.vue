@@ -1,11 +1,6 @@
 <template>
 <div class="tsy-form-mixin-example">
   <m-viewer :markdown="c1"/>
-
-  <div class="mt100 mb100">基于form-mixins的例子入口
-    <button @click="goto(&quot;user-form-new&quot;)">新建</button>
-    <button @click="goto(&quot;user-form-update&quot;, {params: {id:123}})">编辑</button>
-  </div>
 </div>
 </template>
 
@@ -180,6 +175,15 @@ export default {
 |beforePost|在提交数据时调用，接受的待提交的数据，期待返回处理后的数据，用于提价前数据变形，以满足接口要求。默认行为是不做任何处理。|
 |submitted|数据提交完成后 的处理，默认不做任何操作。通常是用来页面迁移|
 |serverError|在调用接口时，接口返回失败，默认打印了错误信息。|
+
+
+Props
+|参数名|值|说明|
+|-|-|-|
+|url|String|新建表单会以POST提交到Url指向的接口；编辑表单会以GET在Url/id的位置拉取被编辑的内容；编辑表单会以Patch的方式增量跟新到Url/id接口地址|
+|getDataUrl|String|如果指定，则会在这个url拉取被编辑的数据|
+|id|-|如果指定id，则为编辑模式|
+|mock|Object、Function|如果拉取被编辑内容失败，提供mock数据|
 `
 
 </script>
