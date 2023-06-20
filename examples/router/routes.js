@@ -282,6 +282,15 @@ const naviRoutes = [
     component: () => import("../views/example-img-cropper.vue"),
   },
   {
+    path: "/ditu",
+    name: "ditu",
+    meta: {
+      navi: "ditu",
+      label: "地图",
+    },
+    component: () => import("../views/example-ditu.vue"),
+  },
+  {
     path: "/form-mixin",
     name: "form-mixin",
     meta: {
