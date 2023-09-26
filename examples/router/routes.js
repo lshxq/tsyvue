@@ -273,6 +273,15 @@ const naviRoutes = [
     component: () => import("../views/example-clip-path.vue"),
   },
   {
+    path: "/percentage",
+    name: "percentage",
+    meta: {
+      navi: "percentage",
+      label: "percentage",
+    },
+    component: () => import("../views/example-percentage.vue"),
+  },
+  {
     path: "/img-cropper",
     name: "img-cropper",
     meta: {

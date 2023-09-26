@@ -27,6 +27,8 @@ import Blocks from './components/blocks';
 import ImgCropper from './components/img-cropper';
 import EasyDitu from './components/ditu';
 import FormMixin from "./mixins/form-mixin";
+import Percentage from './components/percentage';
+
 
 
 
@@ -59,6 +61,7 @@ const components = [
   ImgCropper, // 图片裁剪
   Blocks, // 俄罗斯方块
   EasyDitu, // 地图
+  Percentage,
 ];
 
 
