@@ -1,5 +1,7 @@
 <template>
     <div class="example-percentage-main">
+        <div class="h1">Percentage</div>
+
         <sy-percentage v-model="modelValue" class="mb30"></sy-percentage>
 
         <m-viewer :markdown='content'/>
@@ -35,7 +37,7 @@ export default {
   },
   data() {
     return {
-      modelValue: 99
+      modelValue: 2
     }
   },
   mounted() {

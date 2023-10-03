@@ -1,7 +1,10 @@
 <template>
 <div class="tsy-percentage-main" ref="mainRef" :style="mainStyleComp">
+
   <div class="label" :style="labelStyleComp">{{modelValue}}%</div>
+
   <div v-for="(bar, index) in bars" :key="index" :style="tickStyle(bar)" class="tick"></div>
+
 </div>
 </template>
 
@@ -49,7 +52,7 @@ export default {
     const centerY = this.size / 2;
 
     for (let idx=0; idx<barLength; idx++) {
-      const angle = 360 / barLength * idx -90;
+      const angle = 360 / barLength * idx - 90;
       const x = centerX + radius * Math.cos((angle * Math.PI) / 180);
       const y = centerY + radius * Math.sin((angle * Math.PI) / 180);
       const rotation = angle + 90;
