@@ -6,7 +6,7 @@
 
         <m-viewer :markdown='content'/>
 
-        <sy-percentage v-model="modelValue" size="400" tick-length="25" class="mb30" value-color="hsl(33, 100%, 66%)" value-border-color="white"></sy-percentage>
+        <sy-percentage v-model="modelValue" size="400" tick-length="25" tick-width="5" class="mb30" value-color="hsl(33, 100%, 66%)" value-border-color="white"></sy-percentage>
 
     </div>
 </template>
@@ -24,6 +24,7 @@ sy-percentage(v-model='value')
 |model-value|Number |0 - 100间的数值|
 |size|Number default 200| 表盘默认的大小，高宽都是这个值 |
 |tick-length|Number default 15| tick的长度 |
+|tick-width|Number default 2| tick的宽度 |
 |value-color|String default lightgray| label 的颜色|
 |value-border-color|String default white| label边框的颜色|
 

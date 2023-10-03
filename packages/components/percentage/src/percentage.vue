@@ -30,6 +30,12 @@ export default {
       },
       type: Number
     },
+    tickWidth: {
+      default() {
+        return 2
+      },
+      type: Number
+    },
     valueColor: {
       type: String,
       default() {
@@ -91,10 +97,12 @@ export default {
     tickStyle(bar) {
       const {
         modelValue,
-        tickLength
+        tickLength,
+        tickWidth
       } = this
       const style =  {
         height: `${tickLength}px`,
+        width: `${tickWidth}px`,
         left: bar.x + 'px',
         top: bar.y + 'px',
         transform: 'rotate(' + bar.rotation + 'deg)'
@@ -127,6 +135,7 @@ export default {
   display: inline-block;
   --label-color: rgb(71, 125, 241);
   --label-ray-color: rgb(33, 66, 55);
+  user-select: none;
 }
 
 .tick {
