@@ -1,0 +1,16 @@
+{
+  "id": "4276554",
+  "name": "tsy",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8797032",
+      "name": "rocket",
+      "font_class": "rocket",
+      "unicode": "e868",
+      "unicode_decimal": 59496
+    }
+  ]
+}

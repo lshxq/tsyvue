@@ -2,6 +2,13 @@
     <div class="example-percentage-main">
         <div class="h1">Percentage</div>
 
+        
+
+        <div class="mb100">
+          <input type="range" id="volume" name="volume" min="0" max="100" v-model="modelValue" />
+        </div>
+        
+
         <sy-percentage v-model="modelValue" class="mb30"></sy-percentage>
 
         <m-viewer :markdown='content'/>
@@ -11,7 +18,11 @@
     </div>
 </template>
 
-<script>
+<script setup>
+
+import { ref } from 'vue'
+
+const modelValue = ref(50);
 
 const content = `
 pug 模板
@@ -30,32 +41,14 @@ sy-percentage(v-model='value')
 
 `
 
-export default {
-  setup() {
-    return {
-      content,
-    }
-  },
-  data() {
-    return {
-      modelValue: 2
-    }
-  },
-  mounted() {
-    this.timerId = setInterval(() => {
-      this.modelValue = Math.floor(Math.random() * 100);
-    }, 2000);
-  },
-  unmounted() {
-    clearInterval(this.timerId);
-  }
-}
-
-
 </script>
 
 <style scoped>
 .example-percentage-main {
   background-color: black;
+}
+
+#volume {
+  width: 300px;
 }
 </style>

@@ -6,6 +6,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="./font_4276554_ycvz9nglo7t/iconfont.js"></script>
+    <style>
+      .icon {
+          width: 1em;
+          height: 1em;
+          vertical-align: -0.15em;
+          fill: currentColor;
+          overflow: hidden;
+      }
+
+      .icon.iconfont-rocket {
+          width: 5em;
+          height: 5em;
+          
+      }
+
+      .rocket-wrapper {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 9999999999999;
+      }
+    </style>
+    
   </head>
   <body>
     <noscript>
@@ -13,5 +37,43 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <div class="rocket-wrapper" id="o-rocket">
+      <svg class="icon iconfont-rocket" aria-hidden="true">
+        <use xlink:href="#icon-rocket"></use>
+      </svg>
+    </div>
+    
   </body>
+  <script>
+    let oRocket = document.querySelector('#o-rocket')
+    let deg=0, ex=0, ey=0, vx=0, vy=0, count=0;
+
+    window.addEventListener('mousemove', (e) => {
+      ex = e.x - oRocket.offsetLeft - oRocket.clientWidth / 2;
+      ey = e.y - oRocket.offsetTop - oRocket.clientHeight / 2;
+      deg = Math.atan(ey / ex) / (2 * Math.PI) * 360 + 45;
+      if (ex < 0) {
+        deg += 180;
+      }
+      count = 0;
+    })
+
+
+    function moveRocket() {
+      oRocket.style.transform = `rotate(${deg}deg)`
+      const step = 100
+      if (count < step) {
+        vx += ex / step;
+        vy += ey / step;
+      }
+      oRocket.style.left = vx + 'px';
+      oRocket.style.top = vy + 'px';
+      count++;
+      
+    }
+
+    setInterval(moveRocket, 1);
+    
+
+  </script>
 </html>
