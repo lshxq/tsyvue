@@ -1,22 +1,22 @@
 <template>
     <Teleport to="body">
-        <div v-if="visible" class="sy-dialog">
-            <div class="sy-dialog-panel" :style="dialogPanelStyleComp">
-                <div class="header">
-                    {{title}}
-                    <slot name="header"></slot>
-                    <div class="buttons">
-                        <div class=" header-button close">+</div>
+        <transition name="fade">
+            <div v-if="visible" class="sy-dialog">
+                <div class="sy-dialog-panel" :style="dialogPanelStyleComp">
+                    <div class="header">
+                        {{title}}
+                        <slot name="header"></slot>
+                        <div class="buttons">
+                            <div class="header-button close" @click="close">+</div>
+                        </div>
+                    </div>
+                    <div class="body"><slot></slot></div>
+                    <div class="footer">
+                        <div class="button primary" @click="close">关闭</div>
                     </div>
                 </div>
-                <div class="body"><slot></slot></div>
-                <div class="footer">
-                    <div class="button primary" @click="close">关闭</div>
-                </div>
             </div>
-            
-        </div>
-        
+        </transition>
     </Teleport>
 
 </template>
@@ -61,6 +61,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .8s;
+}
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+
 .sy-dialog {
     position: fixed;
     top: 0;
