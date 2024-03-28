@@ -1,3 +1,8 @@
+:root {
+  --button-prim-bg: #409eff;
+  --button-prim-hover-bg: #5eaeff;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -345,10 +350,29 @@ body {
   background: linear-gradient(#f0f0f0, #fefefe, #f0f0f0);
   display: inline-block;
   cursor: pointer;
-  transition: all .3s;
+  transition: all .1s;
+  user-select: none;
 }
 
 .button:hover {
-  box-shadow: 5px 5px 5px lightgray;
-  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 3px lightgray;
+  transform: translate(-1px, -1px);
+}
+
+.button.primary:hover {
+  background: var(--button-prim-hover-bg);
+}
+
+.button:active {
+  box-shadow: none;
+  transform: none;
+}
+
+.button.primary {
+  color: white;
+  background: var(--button-prim-bg);
+  border: 1px solid var(--button-prim-bg);
+}
+.button.primary:active {
+  background: var(--button-prim-bg);
 }

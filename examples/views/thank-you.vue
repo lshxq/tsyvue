@@ -12,7 +12,11 @@
     <div class="donate-label" @click="visible = true">打赏</div>
   </div>
   <div class="photo-box"><img src="../assets/beach.jpg" draggable="false"/></div>
-  <sy-dialog :visible="visible" title="捐赠窗口" width="390px"><img src="../assets/donate.jpg" style="width: 350px" draggable="false"/></sy-dialog>
+  <sy-dialog v-model:visible="visible" title="捐赠窗口" width="790px">
+    <div class="flex-center">
+      <img src="../assets/donate.jpg" style="width: 350px" draggable="false"/>
+    </div>
+  </sy-dialog>
 </div>
 </template>
 

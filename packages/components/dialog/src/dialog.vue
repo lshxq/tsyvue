@@ -1,7 +1,7 @@
 <template>
     <Teleport to="body">
         <div v-if="visible" class="sy-dialog">
-            <div class="sy-dialog-panel">
+            <div class="sy-dialog-panel" :style="dialogPanelStyleComp">
                 <div class="header">
                     {{title}}
                     <slot name="header"></slot>
@@ -10,7 +10,9 @@
                     </div>
                 </div>
                 <div class="body"><slot></slot></div>
-                <div class="footer"><slot name="footer"></slot></div>
+                <div class="footer">
+                    <div class="button primary" @click="close">关闭</div>
+                </div>
             </div>
             
         </div>
@@ -38,6 +40,23 @@ export default {
         }
 
     },
+    computed: {
+        dialogPanelStyleComp() {
+            const {
+                width
+            } = this
+            const style = {}
+            if (width) {
+                style.width = width
+            }
+            return style;
+        }
+    },
+    methods: {
+        close() {
+            this.$emit('update:visible', false);
+        }
+    }
 }
 </script>
 
@@ -62,6 +81,11 @@ export default {
     border: 1px solid lightgray;
     border-radius: 10px;
     overflow: hidden;
+    background-color: white;
+}
+
+.sy-dialog-panel > .body {
+    padding: 10px;
 }
 
 .sy-dialog-panel > .header {
@@ -93,5 +117,12 @@ export default {
     color: gray;
     transform: rotate(45deg);
     font-size: 30px;
+}
+
+.sy-dialog-panel > .footer {
+    padding: 5px 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid lightgray;
 }
 </style>
