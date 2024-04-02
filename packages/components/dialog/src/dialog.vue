@@ -1,26 +1,26 @@
 <template>
     <Teleport to="body">
-        <transition name="fade">
-            <div v-if="visible" class="sy-dialog">
-                <div class="sy-dialog-panel" :style="dialogPanelStyleComp">
-                    <div class="header">
-                        {{title}}
-                        <slot name="header"></slot>
-                        <div class="buttons">
-                            <div class="header-button close" @click="close">+</div>
-                        </div>
-                    </div>
-                    <div class="body"><slot></slot></div>
-                    <div class="footer">
-                        <div class="button primary" @click="close">关闭</div>
+        <div v-if="show" class="sy-dialog">
+            <div class="sy-dialog-panel" :style="dialogPanelStyleComp" ref="dialogPanelRef">
+                <div class="header">
+                    {{title}}
+                    <slot name="header"></slot>
+                    <div class="buttons">
+                        <div class="header-button close" @click="close">+</div>
                     </div>
                 </div>
+                <div class="body"><slot></slot></div>
+                <div class="footer">
+                    <div class="button primary" @click="close">关闭</div>
+                </div>
             </div>
-        </transition>
+        </div>
     </Teleport>
 
 </template>
 <script>
+
+const delay = .5
 
 export default {
     name: 'SyDialog',
@@ -40,6 +40,13 @@ export default {
         }
 
     },
+    components: {
+    },
+    data() {
+        return {
+            show: false
+        }
+    },
     computed: {
         dialogPanelStyleComp() {
             const {
@@ -52,22 +59,43 @@ export default {
             return style;
         }
     },
+    watch: {
+        visible(vis) {
+            if (vis) {
+                this.show = true
+                this.$nextTick(() => {
+                    this.$refs.dialogPanelRef.style.height = 'auto'
+                    this.$refs.dialogPanelRef.style.opacity = 0
+                    this.$refs.dialogPanelRef.style.transition = 'initial'
+                    setTimeout(() => {
+                        const realHeight = this.$refs.dialogPanelRef.offsetHeight
+                        this.$refs.dialogPanelRef.style.height = '0px'
+                        this.$refs.dialogPanelRef.style.transition = `all ${delay}s`
+                        requestAnimationFrame(() => {
+                            this.$refs.dialogPanelRef.style.height = `${realHeight}px`
+                            this.$refs.dialogPanelRef.style.opacity = 1
+                        })
+                    }, 300) 
+                })
+                
+            }
+        }
+    },
     methods: {
         close() {
-            this.$emit('update:visible', false);
+            this.$refs.dialogPanelRef.style.height = `0px`
+            this.$refs.dialogPanelRef.style.opacity = .2
+            setTimeout(() => {
+                this.$emit('update:visible', false);
+                this.show = false
+            }, delay * 1000)
+            
         }
     }
 }
 </script>
 
 <style lang="css" scoped>
-
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .8s;
-}
-.fade-enter-from, .fade-leave-to {
-    opacity: 0;
-}
 
 .sy-dialog {
     position: fixed;
