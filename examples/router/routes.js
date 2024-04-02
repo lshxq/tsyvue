@@ -12,6 +12,16 @@ const naviRoutes = [
     },
     component: () => import("../views/home-page.vue"), 
   },
+
+  {
+    path: "/sy-dialog",
+    name: "sy-dialog",
+    meta: {
+      navi: "sy-dialog",
+      label: "弹出窗口 sy-dialog",
+    },
+    component: () => import("../views/example-dialog.vue"),
+  },
   
   {
     path: "/sy-radio-group",
