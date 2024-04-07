@@ -9,7 +9,7 @@
                         <div class="header-button close" @click="close">+</div>
                     </div>
                 </div>
-                <div class="body"><slot></slot></div>
+                <div class="body" ref="dialogBodyRef"><slot></slot></div>
                 <div class="footer">
                     <div class="button primary" @click="close">关闭</div>
                 </div>
@@ -37,8 +37,8 @@ export default {
             default() {
                 return '60%'
             }
-        }
-
+        },
+        height: String
     },
     components: {
     },
@@ -50,32 +50,49 @@ export default {
     computed: {
         dialogPanelStyleComp() {
             const {
-                width
+                width,
+                height
             } = this
             const style = {}
+
             if (width) {
                 style.width = width
+            }
+
+            if (height) {
+                style.height = height
             }
             return style;
         }
     },
     watch: {
         visible(vis) {
+            const that = this
             if (vis) {
-                this.show = true
-                this.$nextTick(() => {
-                    this.$refs.dialogPanelRef.style.height = 'auto'
-                    this.$refs.dialogPanelRef.style.opacity = 0
-                    this.$refs.dialogPanelRef.style.transition = 'initial'
+                that.show = true
+                that.$nextTick(() => {
+                    const {
+                        height
+                    } = that
+                    
+                    !height && (that.$refs.dialogPanelRef.style.height = 'auto')
+                    that.$refs.dialogPanelRef.style.opacity = .5
+                    that.$refs.dialogPanelRef.style.transition = 'initial'
                     setTimeout(() => {
-                        const realHeight = this.$refs.dialogPanelRef.offsetHeight
-                        this.$refs.dialogPanelRef.style.height = '0px'
-                        this.$refs.dialogPanelRef.style.transition = `all ${delay}s`
+                        const realHeight = that.$refs.dialogPanelRef.offsetHeight
+                        that.$refs.dialogPanelRef.style.height = '0px'
+                        that.$refs.dialogBodyRef.style.overflow = 'hidden'
                         requestAnimationFrame(() => {
-                            this.$refs.dialogPanelRef.style.height = `${realHeight}px`
-                            this.$refs.dialogPanelRef.style.opacity = 1
+                            that.$refs.dialogPanelRef.style.transition = `all ${delay}s`
+                            requestAnimationFrame(() => {
+                                that.$refs.dialogPanelRef.style.height = height || `${realHeight}px`
+                                that.$refs.dialogPanelRef.style.opacity = 1
+                                setTimeout(() => {
+                                    that.$refs.dialogBodyRef.style.overflow = 'auto'
+                                }, delay * 1000)
+                            })
                         })
-                    }, 300) 
+                    }, 1) 
                 })
                 
             }
@@ -122,6 +139,8 @@ export default {
 
 .sy-dialog-panel > .body {
     padding: 10px;
+    overflow: auto;
+    flex-grow: 1;
 }
 
 .sy-dialog-panel > .header {
@@ -157,6 +176,7 @@ export default {
 
 .sy-dialog-panel > .footer {
     padding: 5px 10px;
+    flex-grow: 0;
     display: flex;
     justify-content: flex-end;
     border-top: 1px solid lightgray;

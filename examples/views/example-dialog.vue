@@ -6,7 +6,7 @@
 
         <div class="button primary mt20" @click="visible = true">显示弹框</div>
 
-        <sy-dialog v-model:visible="visible" title="弹出窗口" width="60%">
+        <sy-dialog v-model:visible="visible" title="弹出窗口" width="60%" >
             <div class="panel">
                 <m-viewer :markdown='c2'/>
             </div>
@@ -27,6 +27,7 @@ export default {
 |props|值|说明|
 |-|-|-|
 |width|String|窗体的宽度，比如790px, 或60%|
+|height|String|通常情况下，dialog可以自动识别内容高度，从而决定对话框高度，但是有些时候，比如内容中包含图片，图片都是异步加载的，会导致无法第一时间确定内容高度，可以通过height属性设置dialog的高度|
 |title|String|窗体的标题|
 |v-model:visible|Boolean default false|是否显示弹窗|
             `,
@@ -62,8 +63,4 @@ export default {
 </script>
 
 <style scoped>
-.panel {
-    height: 400px;
-    overflow: auto;
-}
 </style>

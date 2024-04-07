@@ -63,7 +63,7 @@ export default {
   display: inline-block;
   width: 100px;
   height: 100px;
-  background: #333333;
+  background: #4c0bff;
   cursor: move;
   color: white;
   display: flex;
@@ -72,5 +72,7 @@ export default {
   box-shadow: 10px 10px 10px gray;
   left: 300px;
   top: 100px;
+
+  border-radius: 50px;
 }
 </style>
