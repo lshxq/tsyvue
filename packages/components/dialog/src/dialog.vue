@@ -3,15 +3,21 @@
         <div v-if="show" class="sy-dialog">
             <div class="sy-dialog-panel" :style="dialogPanelStyleComp" ref="dialogPanelRef">
                 <div class="header">
-                    {{title}}
-                    <slot name="header"></slot>
+                    <div class="left">
+                        <slot name="header"></slot>
+                        {{title}}
+                    </div>
+                    
                     <div class="buttons">
                         <div class="header-button close" @click="close">+</div>
                     </div>
                 </div>
                 <div class="body" ref="dialogBodyRef"><slot></slot></div>
                 <div class="footer">
-                    <div class="button primary" @click="close">关闭</div>
+                    <template v-if="customizedFooter">
+                        <slot name="footer"/>
+                    </template>
+                    <div v-else class="button primary" @click="close">关闭</div>
                 </div>
             </div>
         </div>
@@ -48,6 +54,10 @@ export default {
         }
     },
     computed: {
+        customizedFooter() {
+            const that = this
+            return that.$slots.footer
+        },
         dialogPanelStyleComp() {
             const {
                 width,
@@ -145,7 +155,7 @@ export default {
 
 .sy-dialog-panel > .header {
     padding: 5px 10px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid rgb(230, 227, 227);
     color:rgb(34, 32, 32);
     display: flex;
     flex-direction: row;
@@ -153,6 +163,11 @@ export default {
     background-color: rgb(238, 236, 236);
     user-select: none;
     justify-content: space-between;
+}
+
+.sy-dialog-panel > .header > .left {
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .sy-dialog-panel > .header > .buttons {

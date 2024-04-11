@@ -352,6 +352,7 @@ body {
   cursor: pointer;
   transition: all .1s;
   user-select: none;
+  margin-right: 10px;
 }
 
 .button:hover {
