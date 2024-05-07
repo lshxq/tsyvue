@@ -2,11 +2,11 @@
     <div>
         <div class="h1">弹出框 sy-dialog</div>
 
-        <m-viewer :markdown='c1'/>
+        <m-viewer :markdown='c1' class="mb20"/>
 
-        <div class="button primary mt20" @click="visible = true">默认窗体</div>
-        <div class="button primary mt20" @click="customizedHeaderVisible = true">自定义Header</div>
-        <div class="button primary mt20" @click="customizedFooterVisible = true">自定义Footer</div>
+        <sy-button @click="visible = true">默认窗体</sy-button>
+        <sy-button @click="customizedHeaderVisible = true">自定义Header</sy-button>
+        <sy-button @click="customizedFooterVisible = true">自定义Footer</sy-button>
         
         <sy-dialog v-model:visible="visible" title="弹出窗口" width="60%" >
             <div class="panel">

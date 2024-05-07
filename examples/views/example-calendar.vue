@@ -5,7 +5,7 @@
     <div class="calendar-container"><sy-calendar v-model="date" ref="cldr"/></div>
     <div class="current-value">当前值： {{dateStr}}</div>
 
-    <div><button @click="setDisplay">返回当前月份</button></div>
+    <div><sy-button @click="setDisplay">返回当前月份</sy-button></div>
   </div>
 </template>
 

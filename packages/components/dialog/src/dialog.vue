@@ -17,7 +17,7 @@
                     <template v-if="customizedFooter">
                         <slot name="footer"/>
                     </template>
-                    <div v-else class="button primary" @click="close">关闭</div>
+                    <sy-button v-else @click="close">关闭</sy-button>
                 </div>
             </div>
         </div>
@@ -27,6 +27,7 @@
 <script>
 
 const delay = .5
+
 
 export default {
     name: 'SyDialog',

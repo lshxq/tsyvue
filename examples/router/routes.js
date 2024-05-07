@@ -22,7 +22,15 @@ const naviRoutes = [
     },
     component: () => import("../views/example-dialog.vue"),
   },
-  
+  {
+    path: "/sy-button",
+    name: "sy-button",
+    meta: {
+      navi: "sy-button",
+      label: "按钮 sy-button",
+    },
+    component: () => import("../views/example-button.vue"),
+  },
   {
     path: "/sy-radio-group",
     name: "sy-radio-group",
