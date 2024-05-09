@@ -1,10 +1,10 @@
 <template>
   <div class="tsy-single-select-main" >
-    <div class='input' @click="expend = !expend">
-      <input  :value="valueDisplayComputed" readonly @blur="inputBlur" :placeholder="placeholder"/>
+    <div class='input' @click="showOptions">
+      <input  :value="valueDisplayComputed" readonly :placeholder="placeholder"/>
     </div>
 
-    <sy-arrow class="select-arrow" color="#BBBBBB" :rotate="rotateComp" @click="expend = !expend"/>
+    <sy-arrow class="select-arrow" color="#BBBBBB" :rotate="rotateComp" @click="showOptions"/>
     
     <div :class="optionPanelClassComputed">
       <div :class="optionItemClass(opt)" v-for="(opt, idx) of options" :key="idx" @click="optionClicked(opt)">{{opt.label}}</div>
@@ -30,7 +30,10 @@ export default {
     }
   },
   mounted() {
-
+    document.body.addEventListener('click', this.hideOptions)
+  },
+  unmounted() {
+    document.body.removeEventListener('click', this.hideOptions)
   },
   computed: {
     rotateComp() {
@@ -61,11 +64,14 @@ export default {
     }
   },
   methods: {
-    inputBlur() {
+    showOptions() {
+      event.stopPropagation()
+      event.preventDefault()
+      this.expend = true
+    },
+    hideOptions() {
       const that = this;
-      setTimeout(() => {
-        that.expend = false
-      }, 20) // 便面立即消失，导致点击不到option
+      that.expend = false
     },
     optionClicked(opt) {
       this.expend = false;
