@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="example-paginator-main">
     <m-viewer :markdown='content'/>
     <sy-paginator :total="999" :curr="curr" @pagin="pagin"/>
@@ -14,7 +15,7 @@ export default {
   },
   computed: {
     content() {
-      return `# 分页器 sy-paginator
+      return `
 \`\`\` html
 <sy-paginator 
     :total="999" 

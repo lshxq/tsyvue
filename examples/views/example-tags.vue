@@ -1,4 +1,6 @@
 <template>
+
+  
 <div class="tsy-tags-example">
   <m-viewer :markdown="content"/>
 
@@ -32,7 +34,7 @@ import commentMixin from '../mixins/comment-mixins'
 export default {
   mixins: [commentMixin],
   created() {
-    this.content = `# 标签 sy-tags
+    this.content = `
 虽然element中也有实现tags，但是他还是需要自己迭代，使用比较麻烦，这里提供了一个更好用的实现，能满足绝大部分场景
 组件接受items是个数组，数组元素可以是简单的字符串，或者是个tag对象
 \`\`\` javascript

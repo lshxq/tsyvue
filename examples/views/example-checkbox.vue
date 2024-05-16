@@ -1,6 +1,5 @@
 <template>
 <div class="tsy-checkbox-group-example">
-  <div class="h1">复选框 sy-checkbox-group</div>
   <sy-checkbox-group v-model="selected" :options="options"></sy-checkbox-group>
   <p>当前选定的值 {{selected}}</p>
 

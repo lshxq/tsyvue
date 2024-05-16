@@ -1,4 +1,5 @@
 <template>
+ 
 <div class="tsy-preview-example">
   
   <div>
@@ -31,7 +32,7 @@ import commentMixins from "../mixins/comment-mixins.js";
 export default {
   mixins: [commentMixins],
   created() {
-    this.c1 = `# 图片预览 sy-preview
+    this.c1 = `
 用于预览图片，通过images传入需要预览的图片，在需要显示预览的时候，调用组件的show(idx)来显示对应的图片。
 这个组件一上来是什么也不显示的，需要通过调用show函数，让其显示出来。
 \`\`\` html

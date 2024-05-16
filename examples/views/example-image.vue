@@ -1,4 +1,5 @@
 <template>
+ 
 <div class="tsy-images">
   <m-viewer :markdown="content"/>
   
@@ -11,7 +12,7 @@
 export default {
   setup() {
     return {
-      content: `# 图片 sy-img 
+      content: `
 我们经常会遇到需要迭代展示的一些图片，每次都开发相同的逻辑很烦，我对img标签做了一些封装，形成了sy-img标签。添加了一些默认行为
 \`\`\` html
 <sy-img :src='imageArr'

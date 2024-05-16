@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h1">弹出框 sy-dialog</div>
+       
 
         <m-viewer :markdown='c1' class="mb20"/>
 

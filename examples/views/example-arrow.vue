@@ -1,4 +1,6 @@
 <template>
+ 
+
 <div class="example-tsy-arrow">
   <m-viewer :markdown="content"/>
   
@@ -11,8 +13,7 @@
 </template>
 
 <script>
-const content = `# sy-arrow
-
+const content = `
 生成箭头
 
 \`\`\`html

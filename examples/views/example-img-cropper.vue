@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="example-image-cropper-main">
     <m-viewer :markdown="content"/>
 
@@ -16,7 +17,7 @@
 <script>
 export default {
   data() {
-    this.content = `# 图片裁剪 sy-img-cropper
+    this.content = `
 \`\`\` html
 <div class="cropper-wrapper">
   <sy-img-cropper ref="cropper" :img="input"/>

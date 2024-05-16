@@ -1,4 +1,6 @@
 <template>
+ 
+  
   <div class="example-tsy-switch">
     <div class="example">
       <div class="row">

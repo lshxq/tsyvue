@@ -1,4 +1,6 @@
 <template>
+
+
 <div class="tsy-table-example-main">
   <m-viewer :markdown="content"/>
 
@@ -41,7 +43,7 @@ export default {
     ColumnDefineComment,
   },
   created() {
-    this.content = `# 基础Table sy-table
+    this.content = `
 数据化的table
 
 \`\`\` html

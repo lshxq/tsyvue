@@ -1,4 +1,5 @@
 <template>
+ 
     <div class="example-percentage-main">
         <div class="h1">Percentage</div>
 

@@ -1,4 +1,6 @@
 <template>
+
+  
 <div class="tsy-split-screen-vertical-example-main  pb30">
   <m-viewer :markdown="content"/>
 
@@ -18,7 +20,7 @@ import commentMixin from '../mixins/comment-mixins.js'
 export default {
   mixins: [commentMixin],
   created() {
-    this.content = `# 纵向分屏 sy-split-screen-vertical
+    this.content = `
 \`\`\` html
 <sy-split-screen-vertical :left="200">
   <template v-slot:left>left</template>

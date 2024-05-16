@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="example-calendar-main">
     <m-viewer :markdown="content"/>
 
@@ -12,7 +13,7 @@
 <script>
 export default {
   data() {
-    this.content = `# 日历 sy-calendar
+    this.content = `
 \`\`\` html
 <div class="calendar-container">
   <sy-calendar v-model="date" ref="cldr"/>

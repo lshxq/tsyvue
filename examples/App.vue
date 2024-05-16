@@ -12,6 +12,7 @@
     
     <template v-slot:right>
       <div class="right-panel">
+        <page-title/>
         <router-view></router-view>
       </div>
     </template>

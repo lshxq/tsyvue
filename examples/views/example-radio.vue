@@ -1,6 +1,8 @@
 <template>
+
+
 <div class="tsy-radio-example-main">
-  <div class="h1">单选按钮组 sy-radio-group</div>
+
   <sy-radio-group v-model="radioSelected" :options="radioOptions"></sy-radio-group>
   <p>当前值 {{radioSelected}}</p>
 

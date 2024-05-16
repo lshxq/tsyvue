@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="example-ray-border-main">
     <m-viewer :markdown="content"/>
 
@@ -11,7 +12,7 @@
 </template>
 
 <script setup>
-const content = `# 电光边框 sy-ray-border
+const content = `
 \`\`\` html
 <sy-ray-border :radius="5" :width="300" :height="500" color1="#e6f03c,#faf01e,#50befa,transparent" color2="#d232fa,#aab4f0,#f0c8fa,transparent">
   <div class="content-panel">

@@ -54,7 +54,7 @@ const naviRoutes = [
     name: "sy-checkbox-group",
     meta: {
       navi: "sy-checkbox-group",
-      label: "单选按钮 sy-checkbox-group",
+      label: "复选按钮 sy-checkbox-group",
     },
     component: () => import("../views/example-checkbox.vue"),
   },
@@ -127,7 +127,7 @@ const naviRoutes = [
     name: "sy-ray-border",
     meta: {
       navi: "sy-ray-border",
-      label: "旋转照片 sy-ray-border",
+      label: "电光边框 sy-ray-border",
     },
     component: () => import("../views/example-ray-border.vue"),
   },
@@ -237,15 +237,7 @@ const naviRoutes = [
     },
     component: () => import("../views/example-calendar.vue"),
   },
-  {
-    path: "/sy-water-drop",
-    name: "sy-water-drop",
-    meta: {
-      navi: "sy-water-drop",
-      label: "水滴 sy-water-drop",
-    },
-    component: () => import("../views/example-water-drop.vue"),
-  },
+  
   {
     path: "/sy-arrow",
     name: "sy-arrow",
@@ -261,7 +253,7 @@ const naviRoutes = [
     name: "percentage",
     meta: {
       navi: "percentage",
-      label: "percentage",
+      label: "百分比 sy-percentage",
     },
     component: () => import("../views/example-percentage.vue"),
   },
@@ -270,7 +262,7 @@ const naviRoutes = [
     name: "img-cropper",
     meta: {
       navi: "img-cropper",
-      label: "img-cropper",
+      label: "图片裁切 sy-img-cropper",
     },
     component: () => import("../views/example-img-cropper.vue"),
   },
@@ -292,6 +284,15 @@ const naviRoutes = [
       label: "directives",
     },
     component: () => import("../views/example-directives.vue"),
+  },
+  {
+    path: "/sy-water-drop",
+    name: "sy-water-drop",
+    meta: {
+      navi: "sy-water-drop",
+      label: "水滴 sy-water-drop",
+    },
+    component: () => import("../views/example-water-drop.vue"),
   },
   {
     path: "/sy-rolling-image",

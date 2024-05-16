@@ -1,9 +1,8 @@
 <template>
-<div class="examples-sy-form-main">
-  <m-viewer :markdown="c1"/>
 
-  <div class="h1">数据表单 sy-form</div>
-  <div class="mt100">除了form-mixins,我们还可以直接通过纯数据的方式构造表单。</div>
+
+<div class="examples-sy-form-main">
+  <div>除了form-mixins,我们还可以直接通过纯数据的方式构造表单。</div>
   <p>form-mixin 需要自己构建layout，这样比较灵活，但是不利于统一的表单样式，而且开发layout也是有成本的。</p>
   <div>为了进一步减轻页面的开发成本，我提供了基于数据的sy-form。使用该组件只要通过inputs传入表单内容即可。
     <div class="code-block"> 
@@ -77,7 +76,6 @@ import CommnetMixins from '../mixins/comment-mixins.js'
 export default {
   mixins: [CommnetMixins],
   created() {
-    this.c1 = `# form-mixin`
 
     this.propTableData = [
       {

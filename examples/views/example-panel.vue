@@ -1,6 +1,6 @@
 <template>
+ 
 <div class="tsy-scrollbar-example-main">
-  <div class="h1">面板 sy-panel</div>
   <sy-panel class="inline-block" @mount="panelMounted" @resize="panelResized">
     <el-button type="primary" @click="addRow">添加内容</el-button>
     <div class="item" v-for="row of rows" :key="row">{{row}}</div>

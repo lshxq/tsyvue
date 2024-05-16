@@ -1,4 +1,6 @@
 <template>
+ 
+  
 <div class="pagin-table-example-main">
   <axios-required></axios-required>
 

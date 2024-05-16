@@ -1,6 +1,6 @@
 <template>
+ 
 <div class="tsy-options-example-main">
-  <div class="h1">备选项 sy-options</div>
   <axios-required></axios-required>
   <div>项目中很多备选项，是以数据字典的形式，配置在后端数据库中的，需要前端通过 ajax调用接口 拉回来数据集合，并展示，如果每个人单独开发，开发成本高，维护成本也高。</div>
   <div>组件定义了多种常用的外观，可以通过传入type:Number 来指定外观</div>

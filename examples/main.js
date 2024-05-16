@@ -3,6 +3,7 @@ import axios from 'axios'
 import App from './App.vue'
 import tsyvue from '../packages'
 import router from './router'
+import PageTitle from './components/page-title.vue'
 import MarkdownViewer from './components/markdown-viewer.vue'
 
 import './assets/main.css'
@@ -58,6 +59,7 @@ app.use(tsyvue)
 
 app.use(router)
 app.component('m-viewer', MarkdownViewer)
+app.component('page-title', PageTitle)
 app.mixin(myMixin)
 app.mount('#app')
 

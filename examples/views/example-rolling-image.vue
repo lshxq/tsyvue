@@ -14,7 +14,7 @@
 <script>
 export default {
   created() {
-    this.content = `# 旋转图片 sy-rolling-image
+    this.content = `
 \`\`\` html
 <sy-rolling-image :images="images"/>
 \`\`\`
