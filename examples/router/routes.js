@@ -32,6 +32,15 @@ const naviRoutes = [
     component: () => import("../views/example-button.vue"),
   },
   {
+    path: "/sy-link",
+    name: "sy-link",
+    meta: {
+      navi: "sy-link",
+      label: "链接 sy-link",
+    },
+    component: () => import("../views/example-link.vue"),
+  },
+  {
     path: "/sy-radio-group",
     name: "sy-radio-group",
     meta: {
@@ -112,15 +121,7 @@ const naviRoutes = [
     },
     component: () => import("../views/example-options.vue"),
   },
-  {
-    path: "/sy-rolling-image",
-    name: "sy-rolling-image",
-    meta: {
-      navi: "sy-rolling-image",
-      label: "旋转照片 sy-rolling-image",
-    },
-    component: () => import("../views/example-rolling-image.vue"),
-  },
+  
   {
     path: "/sy-ray-border",
     name: "sy-ray-border",
@@ -254,6 +255,62 @@ const naviRoutes = [
     },
     component: () => import("../views/example-arrow.vue"),
   },
+  
+  {
+    path: "/percentage",
+    name: "percentage",
+    meta: {
+      navi: "percentage",
+      label: "percentage",
+    },
+    component: () => import("../views/example-percentage.vue"),
+  },
+  {
+    path: "/img-cropper",
+    name: "img-cropper",
+    meta: {
+      navi: "img-cropper",
+      label: "img-cropper",
+    },
+    component: () => import("../views/example-img-cropper.vue"),
+  },
+ 
+  {
+    path: "/form-mixin",
+    name: "form-mixin",
+    meta: {
+      navi: "form-mixin",
+      label: "form-mixin",
+    },
+    component: () => import("../views/form-mixin/example-form-mixin.vue"),
+  },
+  {
+    path: "/directives",
+    name: "directives",
+    meta: {
+      navi: "directives",
+      label: "directives",
+    },
+    component: () => import("../views/example-directives.vue"),
+  },
+  {
+    path: "/sy-rolling-image",
+    name: "sy-rolling-image",
+    meta: {
+      navi: "sy-rolling-image",
+      label: "旋转照片 sy-rolling-image",
+    },
+    component: () => import("../views/example-rolling-image.vue"),
+  },
+  {
+    path: "/ditu",
+    name: "ditu",
+    meta: {
+      navi: "ditu",
+      label: "地图",
+    },
+    component: () => import("../views/example-ditu.vue"),
+  },
   {
     path: "/blocks",
     name: "blocks",
@@ -289,51 +346,6 @@ const naviRoutes = [
       label: "clip-path",
     },
     component: () => import("../views/example-clip-path.vue"),
-  },
-  {
-    path: "/percentage",
-    name: "percentage",
-    meta: {
-      navi: "percentage",
-      label: "percentage",
-    },
-    component: () => import("../views/example-percentage.vue"),
-  },
-  {
-    path: "/img-cropper",
-    name: "img-cropper",
-    meta: {
-      navi: "img-cropper",
-      label: "img-cropper",
-    },
-    component: () => import("../views/example-img-cropper.vue"),
-  },
-  {
-    path: "/ditu",
-    name: "ditu",
-    meta: {
-      navi: "ditu",
-      label: "地图",
-    },
-    component: () => import("../views/example-ditu.vue"),
-  },
-  {
-    path: "/form-mixin",
-    name: "form-mixin",
-    meta: {
-      navi: "form-mixin",
-      label: "form-mixin",
-    },
-    component: () => import("../views/form-mixin/example-form-mixin.vue"),
-  },
-  {
-    path: "/directives",
-    name: "directives",
-    meta: {
-      navi: "directives",
-      label: "directives",
-    },
-    component: () => import("../views/example-directives.vue"),
   },
   {
     path: "/thanks",

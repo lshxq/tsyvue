@@ -1,5 +1,6 @@
 import VTabs from "./components/vertical-tab";
 import Button from './components/button';
+import Link from './components/link';
 import RollingImage from './components/rolling-image';
 import RayBorder from './components/ray-border';
 import Arrow from './components/arrow';
@@ -37,6 +38,7 @@ import Dialog from './components/dialog';
 const components = [
   SplitScreenVertical, // 左右分屏
   Button, // 按钮
+  Link, // 链接
   RollingImage,
   RayBorder,
   Arrow,
@@ -101,6 +103,7 @@ export default {
   // components
   Arrow,
   Button,
+  Link,
   RollingImage,
   RayBorder,
   Select,
