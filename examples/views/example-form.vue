@@ -2,6 +2,7 @@
 
 
 <div class="examples-sy-form-main">
+  <div>这个组件需要是element-ui的扩展，需要el-form等一些列组件的支持，只能在有element-ui的环境下使用。</div>
   <div>除了form-mixins,我们还可以直接通过纯数据的方式构造表单。</div>
   <p>form-mixin 需要自己构建layout，这样比较灵活，但是不利于统一的表单样式，而且开发layout也是有成本的。</p>
   <div>为了进一步减轻页面的开发成本，我提供了基于数据的sy-form。使用该组件只要通过inputs传入表单内容即可。
@@ -25,6 +26,7 @@
       </div>
     </div>
     <p>formInputs 定义了表单的输入项目</p>
+    <m-viewer :markdown="formInputsCode"/>
     <p><img src="../assets/form-inputs.jpg"/></p>
     <p>目前支持的input如下</p>
     <ul> 
@@ -50,8 +52,8 @@
       <sy-table :columns="eventTableColumns" :data="eventTableData"></sy-table>
     </div>
     <div class="mt100">通过下面入口进入表单的用例 
-      <el-button @click="goto(&quot;sy-form-create&quot;)" type="primary">新建表单</el-button>
-      <el-button @click="goto(&quot;sy-form-update&quot;)" type="primary">编辑表单</el-button>
+      <sy-button @click="goto(&quot;sy-form-create&quot;)" type="primary">新建表单</sy-button>
+      <sy-button @click="goto(&quot;sy-form-update&quot;)" type="primary">编辑表单</sy-button>
     </div>
     <div class="mt100"> 
       <div class="h2">Inputs定义</div>
@@ -76,6 +78,315 @@ import CommnetMixins from '../mixins/comment-mixins.js'
 export default {
   mixins: [CommnetMixins],
   created() {
+    this.formInputsCode = `
+# 新建表单的例子
+\`\`\` html
+<div class="tsy-example-form-create-main">
+  <div class="h2">新建表单用例</div>
+  <sy-form :inputs="formInputs" url="/example/syform/submit-url" @submitted="createSubmitted" @canceled="createCanceled"></sy-form>
+</div>
+\`\`\`
+
+
+\`\`\` javascript
+export default {
+  created() {
+    this.formInputs = [
+      {
+        type: "input",
+        name: "xingming",
+        value: "tsy",
+        label: "姓名",
+        meta: {
+          placeholder: "请输入姓名",
+          width: 300,
+          maxlength: 30,
+        },
+
+        rule: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        ],
+      },
+      {
+        type: "options",
+        name: "gender",
+        value: "male",
+        label: "性别",
+        meta: {
+          url: "/example/gender/options",
+          type: 2,
+          mock() {
+            return [
+              { label: "男", value: "male" },
+              { label: "女", value: "female" },
+            ];
+          },
+        },
+      },
+      {
+        type: "options",
+        name: "xueli",
+        value: "bachelor",
+        label: "学历",
+        meta: {
+          options: [
+            {
+              label: "中学",
+              value: "highschool",
+            },
+            {
+              label: "大专",
+              value: "college",
+            },
+            {
+              label: "大学（本科）",
+              value: "bachelor",
+            },
+            {
+              label: "研究生",
+              value: "master",
+            },
+          ],
+        },
+      },
+      {
+        type: "options",
+        kind: 2,
+        name: "xingqu",
+        label: "兴趣",
+        meta: {
+          url: "/example/xingqu/options",
+          type: 2,
+          multiple: true,
+          mock() {
+            return [
+              {
+                label: "篮球",
+                value: "lanqiu",
+              },
+              {
+                label: "足球",
+                value: "zuqiu",
+              },
+              {
+                label: "乒乓",
+                value: "pingpang",
+              },
+            ];
+          },
+        },
+      },
+      {
+        type: "options",
+        name: "gangwei",
+        label: "岗位",
+        meta: {
+          url: "/example/gangwei/options",
+          multiple: true,
+          mock() {
+            return [
+              {
+                label: "前端工程师",
+                value: "FE",
+              },
+              {
+                label: "后端工程师",
+                value: "BE",
+              },
+              {
+                label: "技术经理",
+                value: "MGR",
+              },
+            ];
+          },
+        },
+      },
+      {
+        type: "datepicker",
+        name: "birthday",
+        label: "生日",
+        value: "1983-7-4",
+      },
+    ];
+  },
+  methods: {
+    createSubmitted(data) {
+      console.log(data)
+      this.$message.success('新建表单提交完成')
+    },
+    createCanceled() {
+      this.$message.error('新建表单取消了')
+      setTimeout(() => {
+        this.goto("sy-form")
+      }, 1500)
+    },
+  }
+};
+\`\`\`
+
+# 编辑表单的例子
+\`\`\` html
+<div class="tsy-example-form-update-main">
+  <div class="h2">编辑表单用例</div>
+  <sy-form :inputs="formInputs" id="test" url="/example/syform/submit-url" :data-loaded-handler="dataLoadedHandler" :before-post-handler="beforePostHandler" :mock="loadDataMock" @submitted="updateSubmitted" @canceled="updateCanceled"></sy-form>
+</div>
+\`\`\`
+
+
+\`\`\` javascript
+export default {
+  created() {
+    this.loadDataMock = {
+      xingming: 'TSYVUE',
+      gender: 'female',
+      xueli: 'bachelor',
+      xingqu: ['lanqiu', 'zuqiu'],
+      gangwei: 'MGR',
+      birthday: '2022-3-23'
+    }
+    this.formInputs = [
+      {
+        type: "input",
+        name: "xingming",
+        value: "tsy",
+        label: "姓名",
+        meta: {
+          placeholder: "请输入姓名",
+          width: 300,
+          maxlength: 30,
+        },
+
+        rule: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        ],
+      },
+      {
+        type: "options",
+        name: "gender",
+        value: "male",
+        label: "性别",
+        meta: {
+          url: "/example/gender/options",
+          type: 2,
+          mock() {
+            return [
+              { label: "男", value: "male" },
+              { label: "女", value: "female" },
+            ];
+          },
+        },
+      },
+      {
+        type: "options",
+        name: "xueli",
+        value: "bachelor",
+        label: "学历",
+        meta: {
+          options: [
+            {
+              label: "中学",
+              value: "highschool",
+            },
+            {
+              label: "大专",
+              value: "college",
+            },
+            {
+              label: "大学（本科）",
+              value: "bachelor",
+            },
+            {
+              label: "研究生",
+              value: "master",
+            },
+          ],
+        },
+      },
+      {
+        type: "options",
+        kind: 2,
+        name: "xingqu",
+        label: "兴趣",
+        meta: {
+          url: "/example/xingqu/options",
+          type: 2,
+          multiple: true,
+          mock() {
+            return [
+              {
+                label: "篮球",
+                value: "lanqiu",
+              },
+              {
+                label: "足球",
+                value: "zuqiu",
+              },
+              {
+                label: "乒乓",
+                value: "pingpang",
+              },
+            ];
+          },
+        },
+      },
+      {
+        type: "options",
+        name: "gangwei",
+        label: "岗位",
+        meta: {
+          url: "/example/gangwei/options",
+          multiple: true,
+          mock() {
+            return [
+              {
+                label: "前端工程师",
+                value: "FE",
+              },
+              {
+                label: "后端工程师",
+                value: "BE",
+              },
+              {
+                label: "技术经理",
+                value: "MGR",
+              },
+            ];
+          },
+        },
+      },
+      {
+        type: "datepicker",
+        name: "birthday",
+        label: "生日",
+        value: "1983-7-4",
+      },
+    ];
+  },
+  methods: {
+    updateSubmitted(data) {
+      console.log(data)
+      this.$message.success('编辑表单提交完成')
+    },
+    updateCanceled() {
+      this.$message.error('编辑表单取消了')
+      setTimeout(() => {
+        this.goto("sy-form")
+      }, 1500)
+    },
+    dataLoadedHandler(data) {
+      this.$message.info('数据加载完成' + JSON.stringify(data))
+      return data
+    }, 
+    beforePostHandler(data) {
+      this.$message.info('加工提交数据' + JSON.stringify(data))
+      return data
+    }
+  }
+};
+\`\`\`
+`
 
     this.propTableData = [
       {

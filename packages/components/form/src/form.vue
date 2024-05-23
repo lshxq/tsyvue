@@ -9,8 +9,8 @@
       </div>
     </el-form-item>
     <el-form-item>
-      <el-button @click="apply" type="primary">确定</el-button>
-      <el-button @click="cancel">取消</el-button>
+      <sy-button @click="apply" type="primary">确定</sy-button>
+      <sy-button @click="cancel">取消</sy-button>
     </el-form-item>
   </el-form>
 </div>
